@@ -32,6 +32,38 @@
                         </x-nav-link>
                     </div>
                 @endif
+                @php
+                    $role = Auth::user()->role ?? 'user'; // Проверяем роль пользователя, если нет — 'user'
+                @endphp
+
+                @if($role === 'admin')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('admin.books.index')" :active="request()->routeIs('admin.books.index')">
+                            {{ __('Admin Books') }}  <!-- Ссылка на управление книгами для админа -->
+                        </x-nav-link>
+                    </div>
+                @else
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('user.books.index')" :active="request()->routeIs('user.books.index')">
+                            {{ __('User Books') }}  <!-- Ссылка на каталог книг для пользователя -->
+                        </x-nav-link>
+                    </div>
+                @endif
+
+
+                @php
+                    $role = Auth::user()->role ?? 'user'; // Проверяем роль пользователя
+                @endphp
+
+                @if($role === 'admin')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index')">
+                            {{ __('Manage Users') }}  <!-- Ссылка на управление пользователями для админа -->
+                        </x-nav-link>
+                    </div>
+                @endif
+
+
             </div>
 
             <!-- Settings Dropdown -->
