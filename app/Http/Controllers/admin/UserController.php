@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Notifications\ProfileUpdatedNotification;
 
 class UserController extends Controller
 {
@@ -37,8 +38,12 @@ class UserController extends Controller
             'password' => bcrypt($request->password),
             'role' => $request->role,
         ]);
+        $updatedField = 'Имя и email'; // Пример, поле может быть динамическим
 
-        return redirect()->route('admin.users.index')->with('success', 'Пользователь успешно добавлен');
+        // Отправляем уведомление пользователю
+        auth()->user()->notify(new ProfileUpdatedNotification($updatedField));
+
+        return redirect()->route('/profile')->with('success', 'Профиль обновлен и вы уведомлены.');
     }
 
     // Показать форму для редактирования пользователя

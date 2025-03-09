@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('User Books') }}  <!-- Заголовок страницы -->
+            {{ __('Books') }}  <!-- Заголовок страницы -->
         </h2>
     </x-slot>
 
@@ -10,8 +10,8 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <!-- Приветственное сообщение -->
                 <div class="p-6">
-                    <h1 class="text-2xl font-semibold mb-6">Добро пожаловать, Пользователь!</h1>
-                    <p class="text-gray-600">Здесь вы можете просматривать список доступных книг.</p>
+                    <h1 class="text-2xl font-semibold mb-6">Welcome, {{ auth()->user()->name }}!</h1>
+                    <p class="text-gray-600">Here you can view the list of available books.</p>
                 </div>
 
                 <!-- Список книг -->

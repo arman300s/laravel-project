@@ -11,7 +11,8 @@
 
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route($dashboardRoute) }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        <!-- Увеличиваем изображение, сохраняя пропорции -->
+                        <img src="{{ asset('logo.png') }}" alt="My Logo" class="block h-20 w-auto">
                     </a>
                 </div>
                 <!-- Navigation Links -->
@@ -28,7 +29,7 @@
                 @else
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link :href="route('user.dashboard')" :active="request()->routeIs('user.dashboard')">
-                            {{ __('User Dashboard') }}
+                            {{ __('Dashboard') }}
                         </x-nav-link>
                     </div>
                 @endif
@@ -39,13 +40,13 @@
                 @if($role === 'admin')
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link :href="route('admin.books.index')" :active="request()->routeIs('admin.books.index')">
-                            {{ __('Admin Books') }}  <!-- Ссылка на управление книгами для админа -->
+                            {{ __('Books') }}  <!-- Ссылка на управление книгами для админа -->
                         </x-nav-link>
                     </div>
                 @else
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link :href="route('user.books.index')" :active="request()->routeIs('user.books.index')">
-                            {{ __('User Books') }}  <!-- Ссылка на каталог книг для пользователя -->
+                            {{ __('Books') }}  <!-- Ссылка на каталог книг для пользователя -->
                         </x-nav-link>
                     </div>
                 @endif
@@ -62,6 +63,7 @@
                         </x-nav-link>
                     </div>
                 @endif
+
 
 
             </div>

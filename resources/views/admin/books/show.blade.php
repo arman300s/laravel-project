@@ -9,15 +9,17 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    <h1 class="text-2xl font-semibold mb-6">{{ $book->title }}</h1>
+                    <h1 class="text-3xl font-semibold mb-6 text-gray-800">{{ $book->title }}</h1> <!-- Название книги -->
 
                     <!-- Описание книги -->
-                    <p><strong>Автор:</strong> {{ $book->author }}</p>
-                    <p><strong>Описание:</strong> {{ $book->description }}</p>
+                    <p class="text-lg mb-4"><strong class="font-medium text-gray-800">Author:</strong> {{ $book->author }}</p> <!-- Автор -->
+                    <p class="text-lg"><strong class="font-medium text-gray-800">Description:</strong> {{ $book->description }}</p> <!-- Описание -->
 
                     <!-- Кнопка для возврата на список книг -->
                     @if(Auth::check() && Auth::user()->role === 'admin')
-                        <a href="{{ route('admin.books.index') }}" class="btn btn-secondary mt-4">Вернуться к списку</a>
+                        <a href="{{ route('admin.books.index') }}" class="inline-block bg-gray-600 text-black px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-700 mt-6 transition-all duration-300">
+                            Back to List
+                        </a> <!-- Вернуться к списку -->
                     @endif
                 </div>
             </div>
