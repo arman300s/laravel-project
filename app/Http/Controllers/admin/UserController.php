@@ -43,7 +43,7 @@ class UserController extends Controller
         // Отправляем уведомление пользователю
         auth()->user()->notify(new ProfileUpdatedNotification($updatedField));
 
-        return redirect()->route('profile')->with('success', 'your profile has been updated and you have been notified.');
+        return redirect()->route('admin.users.index')->with('success', 'Your profile has been updated and you have been notified.');
     }
 
     // Показать форму для редактирования пользователя

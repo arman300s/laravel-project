@@ -44,7 +44,10 @@
                                         🗑️ Delete
                                     </button>
                                 </form>
-
+                                <a href="{{ route('admin.books.show', $book->id) }}"
+                                   class="text-yellow-500 font-semibold hover:text-yellow-600 transition">
+                                    🔎More details
+                                </a>
                                 <!-- Download PDF -->
                                 <a href="{{ route('books.download', $book->id) }}"
                                    class="text-blue-500 font-semibold hover:text-blue-600 transition">

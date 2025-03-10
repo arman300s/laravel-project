@@ -23,15 +23,25 @@
                     <p class="text-lg text-gray-600">This is the dashboard where you can manage all aspects of the application.</p>  <!-- Описание -->
 
                     <!-- Дополнительная информация или действия для администратора -->
-                    <div class="mt-6">
-                        <a href="<?php echo e(route('admin.users.index')); ?>" class="inline-block bg-blue-600 text-blue-700 px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-all duration-300">
-                            Manage Users
+                    <div class="mt-6 flex flex-wrap gap-4">
+                        <a href="<?php echo e(route('admin.users.index')); ?>"
+                           class="px-6 py-3 rounded-lg shadow-md font-semibold transition duration-300
+                           <?php echo e(request()->routeIs('admin.users.index') ? ' text-black' : 'bg-blue-600 text-black hover:bg-blue-700'); ?>">
+                            👤 Manage Users
                         </a>
-                        <a href="<?php echo e(route('admin.books.index')); ?>" class="inline-block bg-green-600 text-blue px-6 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition-all duration-300 ml-4">
-                            Manage Books
+
+                        <a href="<?php echo e(route('admin.books.index')); ?>"
+                           class="px-6 py-3 rounded-lg shadow-md font-semibold transition duration-300
+                           <?php echo e(request()->routeIs('admin.books.index') ? ' text-black' : 'bg-green-600 text-black hover:bg-green-700'); ?>">
+                            📚 Manage Books
+                        </a>
+
+                        <a href="<?php echo e(route('admin.book.views')); ?>"
+                           class="px-6 py-3 rounded-lg shadow-md font-semibold transition duration-300
+                           <?php echo e(request()->routeIs('admin.book.views') ?  : ' text-black hover:bg-purple-700'); ?>">
+                            📊 View Book Views
                         </a>
                     </div>
-                </div>
             </div>
         </div>
     </div>

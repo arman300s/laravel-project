@@ -44,6 +44,7 @@
                                 <td class="px-4 py-2 border"><?php echo e($user->role); ?></td>
                                 <td class="px-4 py-2 border">
                                     <a href="<?php echo e(route('admin.users.edit', $user->id)); ?>" class="text-blue-500">Edit</a> <!-- Редактировать -->
+
                                     <form action="<?php echo e(route('admin.users.destroy', $user->id)); ?>" method="POST" style="display:inline;">
                                         <?php echo csrf_field(); ?>
                                         <?php echo method_field('DELETE'); ?>
@@ -52,6 +53,7 @@
                                 </td>
                             </tr>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
                         </tbody>
                     </table>
 

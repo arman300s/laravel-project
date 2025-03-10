@@ -15,17 +15,20 @@
                 <p class="text-lg mb-4"><strong class="font-medium text-gray-800">👤Author:</strong> {{ $book->author }}</p> <!-- Автор -->
                 <p class="text-lg"><strong class="font-medium text-gray-800">📚Description:</strong> {{ $book->description }}</p> <!-- Описание -->
 
-                <a href="{{ route('books.download', $book->id) }}"
-                   class="  text-black font-bold text-lg ">
-                    📥 <strong>Download PDF</strong>
-                </a>
+                <!-- Кнопки действий -->
+                <div class="mt-6 flex space-x-4">
+                    <a href="{{ route('books.download', $book->id) }}"
+                       class="inline-flex items-center px-6 py-3  text-black text-lg font-medium rounded-lg shadow-md hover:bg-blue-700 transition">
+                        📥 Download PDF
+                    </a>
 
-                <!-- Кнопка для возврата на список книг -->
-                @if(Auth::check() && Auth::user()->role === 'admin')
-                    <a href="{{ route('admin.books.index') }}" class="inline-block bg-gray-600 text-black px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-700 mt-6 transition-all duration-300">
-                        Back to List
-                    </a> <!-- Вернуться к списку -->
-                @endif
+                    @if(Auth::check())
+                        <a href="{{ Auth::user()->role === 'admin' ? route('admin.books.index') : route('user.books.index') }}"
+                           class="inline-flex items-center px-6 py-3 bg-gray-300 text-gray-800 text-lg font-medium rounded-lg shadow-md ">
+                            🔙 Back to list
+                        </a>
+                    @endif
+                </div>
             </div>
         </div>
     </div>

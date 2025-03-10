@@ -35,6 +35,7 @@
                                 <td class="px-4 py-2 border">{{ $user->role }}</td>
                                 <td class="px-4 py-2 border">
                                     <a href="{{ route('admin.users.edit', $user->id) }}" class="text-blue-500">Edit</a> <!-- Редактировать -->
+
                                     <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
@@ -43,6 +44,7 @@
                                 </td>
                             </tr>
                         @endforeach
+
                         </tbody>
                     </table>
 
