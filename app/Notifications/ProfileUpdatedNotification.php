@@ -17,13 +17,13 @@ class ProfileUpdatedNotification extends Notification
 
     public function via($notifiable)
     {
-        return ['database']; // Уведомление через базу данных
+        return ['database'];
     }
 
     public function toDatabase($notifiable)
     {
         return [
-            'message' => "Ваш профиль был обновлен. Изменено поле: {$this->updatedField}",
+            'message' => " 🔰Your profile has been updated. The field has been changed: {$this->updatedField}",
         ];
     }
 }

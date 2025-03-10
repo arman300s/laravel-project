@@ -18,12 +18,19 @@
                 <div class="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach ($books as $book)
                         <div class="bg-gray-100 p-4 rounded-lg shadow-md hover:shadow-lg transition">
-                            <h2 class="text-xl font-semibold mb-2">{{ $book->title }}</h2>
+                            <h2 class="text-xl font-semibold mb-2">📗{{ $book->title }}</h2>
                             <p class="text-gray-700">{{ Str::limit($book->description, 150) }}</p>
                             <a href="{{ route('admin.books.show', $book->id) }}" class="text-blue-500 hover:underline mt-4 inline-block">
-                                Подробнее
+                                More detailed
                             </a>
+
                         </div>
+
+                        <a href="{{ route('books.download', $book->id) }}"
+                           class="  text-black font-bold text-lg ">
+                            📥 <strong>Download PDF</strong>
+                        </a>
+
                     @endforeach
                 </div>
             </div>

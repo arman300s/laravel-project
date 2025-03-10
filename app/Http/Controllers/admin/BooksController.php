@@ -31,19 +31,30 @@ class BooksController extends Controller
             'title' => 'required|string|max:255',
             'author' => 'required|string|max:255',
             'description' => 'required|string',
+            'pdf' => 'nullable|file|mimes:pdf|max:5120', // До 5MB,
         ]);
 
-        Book::create($request->all());
+        // Создание книги
+        $book = new Book();
+        $book->title = $request->title;
+        $book->author = $request->author;
+        $book->description = $request->description;
 
-        // Отправляем уведомление всем пользователям
+        // Проверка загрузки PDF-файла
+        if ($request->hasFile('pdf')) {
+            $pdfPath = $request->file('pdf')->store('books', 'public');
+            $book->pdf_path = $pdfPath;
+        }
+
+        $book->save(); // Сохраняем книгу в БД
+
+        // Отправка уведомления всем пользователям
         $bookTitle = $request->title;
-
-        // Отправляем уведомление всем пользователям
         User::all()->each(function ($user) use ($bookTitle) {
             $user->notify(new NewBookNotification($bookTitle));
         });
 
-        return redirect()->route('admin.books.index')->with('success', 'Книга добавлена и пользователи уведомлены.');
+        return redirect()->route('admin.books.index')->with('success', 'book has been added and users have been notified.');
     }
 
     // Показать форму редактирования книги
@@ -87,6 +98,20 @@ class BooksController extends Controller
             }
         });
 
-        return redirect()->route('admin.books.index')->with('success', 'Книга удалена и пользователи уведомлены.');
+        return redirect()->route('admin.books.index')->with('success', 'book has been deleted and users have been notified.');
+    }
+    public function downloadPdf(Book $book)
+    {
+        if (!$book->pdf_path) {
+            return redirect()->route('user.books.index')->with('error', 'PDF file was not found.');
+        }
+
+        $pdfPath = storage_path('app/public/' . $book->pdf_path);
+
+        if (!file_exists($pdfPath)) {
+            return redirect()->route('user.books.index')->with('error', 'File was not found.');
+        }
+
+        return response()->download($pdfPath);
     }
 }

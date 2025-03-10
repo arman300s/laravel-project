@@ -14,13 +14,13 @@ class BookDeletedNotification extends Notification
 
     public function via($notifiable)
     {
-        return ['database'];  // Здесь мы будем использовать базу данных для уведомлений
+        return ['database'];
     }
 
     public function toDatabase($notifiable)
     {
         return [
-            'message' => 'Книга "' . $this->bookTitle . '" была удалена администратором.',
+            'message' => '❗The book "' . $this->bookTitle . '" was deleted by the administrator.',
         ];
     }
 }

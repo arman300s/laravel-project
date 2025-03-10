@@ -43,7 +43,7 @@ class UserController extends Controller
         // Отправляем уведомление пользователю
         auth()->user()->notify(new ProfileUpdatedNotification($updatedField));
 
-        return redirect()->route('/profile')->with('success', 'Профиль обновлен и вы уведомлены.');
+        return redirect()->route('profile')->with('success', 'your profile has been updated and you have been notified.');
     }
 
     // Показать форму для редактирования пользователя
@@ -69,7 +69,7 @@ class UserController extends Controller
             'password' => $request->password ? bcrypt($request->password) : $user->password,
         ]);
 
-        return redirect()->route('admin.users.index')->with('success', 'Данные пользователя успешно обновлены');
+        return redirect()->route('admin.users.index')->with('success', 'users data has been successfully updated');
     }
 
     // Удалить пользователя
@@ -77,6 +77,20 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return redirect()->route('admin.users.index')->with('success', 'Пользователь удален');
+        return redirect()->route('admin.users.index')->with('success', 'user has been deleted');
+    }
+    public function downloadPdf(Book $book)
+    {
+        if (!$book->pdf_path) {
+            return redirect()->route('user.books.index')->with('error', 'PDF file was not found.');
+        }
+
+        $pdfPath = storage_path('app/public/' . $book->pdf_path);
+
+        if (!file_exists($pdfPath)) {
+            return redirect()->route('user.books.index')->with('error', 'file was not found.');
+        }
+
+        return response()->download($pdfPath);
     }
 }

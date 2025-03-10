@@ -23,7 +23,7 @@
                     @endif
 
                     <!-- Форма добавления книги -->
-                    <form action="{{ route('admin.books.store') }}" method="POST">
+                    <form action="{{ route('admin.books.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         <!-- Поле для названия книги -->
@@ -44,11 +44,18 @@
                             <textarea id="description" name="description" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" required>{{ old('description') }}</textarea>
                         </div>
 
+                        <!-- Поле для загрузки PDF -->
+                        <div class="mb-4">
+                            <label for="pdf" class="block text-sm font-medium text-gray-700">Upload PDF</label>
+                            <input type="file" id="pdf" name="pdf" accept=".pdf" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+
                         <!-- Кнопка отправки формы -->
                         <button type="submit" class="inline-block bg-indigo-600 text-black px-6 py-2 rounded-md text-sm font-medium mt-4 hover:bg-indigo-700 transition-all duration-300">
                             Add Book
                         </button>  <!-- Добавить книгу -->
                     </form>
+
                 </div>
             </div>
         </div>

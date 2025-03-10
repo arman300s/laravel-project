@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\BooksController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\UserController;
@@ -30,6 +31,8 @@ Route::prefix('user')->name('user.')->group(function () {
     Route::get('books', [UserBookController::class, 'index'])->name('books.index');
 });
 
+Route::get('/admin/books/{book}/download', [AdminBookController::class, 'downloadPdf'])->name('admin.books.download');
+Route::get('/books/{book}/download', [UserBookController::class, 'downloadPdf'])->name('books.download');
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/users', [AdminUserController::class, 'index'])->name('admin.users.index');

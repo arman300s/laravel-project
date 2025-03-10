@@ -12,7 +12,8 @@
                     <h1 class="text-2xl font-semibold mb-6">Users List</h1> <!-- Список пользователей -->
 
                     <!-- Кнопка для добавления нового пользователя -->
-                    <a href="{{ route('admin.users.create') }}" class="btn btn-primary mb-4">Add New User</a>
+                    <a href="{{ route('admin.users.create') }}" class="btn btn-primary font-semibold mb-4 ">Add New User</a>
+
 
                     <!-- Таблица пользователей -->
                     <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-sm">

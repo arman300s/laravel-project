@@ -9,5 +9,12 @@ class Book extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'author', 'description', 'is_active'];
+    protected $fillable = ['title', 'author', 'description', 'is_active','pdf_path'];
+
+    protected $appends = ['pdf_url'];
+
+    public function getPdfUrlAttribute()
+    {
+        return $this->pdf_path ? asset('storage/' . $this->pdf_path) : null;
+    }
 }

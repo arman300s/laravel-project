@@ -17,13 +17,13 @@ class NewBookNotification extends Notification
 
     public function via($notifiable)
     {
-        return ['database']; // Уведомление через базу данных
+        return ['database'];
     }
 
     public function toDatabase($notifiable)
     {
         return [
-            'message' => "Новая книга: {$this->bookTitle} была добавлена!",
+            'message' => "♻️ The new book: {$this->bookTitle} has been added!",
         ];
     }
 }
