@@ -9,14 +9,14 @@ class AddPublisherToBooksTable extends Migration
     public function up()
     {
         Schema::table('books', function (Blueprint $table) {
-            $table->string('publisher')->nullable();  // Добавляем столбец publisher
+            $table->string('publisher')->nullable();
         });
     }
 
     public function down()
     {
         Schema::table('books', function (Blueprint $table) {
-            $table->dropColumn('publisher');  // Удаляем столбец publisher
+            $table->dropColumn('publisher');
         });
     }
 }

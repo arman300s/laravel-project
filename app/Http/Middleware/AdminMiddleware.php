@@ -12,6 +12,6 @@ class AdminMiddleware
         if (Auth::check() && Auth::user()->role === 'admin') {
             return $next($request);
         }
-        return redirect()->route('user.dashboard'); // Если не админ, перенаправляем
+        return redirect()->route('user.dashboard');
     }
 }

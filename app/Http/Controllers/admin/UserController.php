@@ -9,20 +9,17 @@ use App\Notifications\ProfileUpdatedNotification;
 
 class UserController extends Controller
 {
-    // Показать всех пользователей
     public function index()
     {
-        $users = User::paginate(10);  // Пагинация на 10 пользователей
+        $users = User::paginate(10);
         return view('admin.users.index', compact('users'));
     }
 
-    // Показать форму для добавления нового пользователя
     public function create()
     {
         return view('admin.users.create');
     }
 
-    // Сохранить нового пользователя
     public function store(Request $request)
     {
         $request->validate([
@@ -38,21 +35,19 @@ class UserController extends Controller
             'password' => bcrypt($request->password),
             'role' => $request->role,
         ]);
-        $updatedField = 'Имя и email'; // Пример, поле может быть динамическим
+        $updatedField = 'Имя и email';
 
-        // Отправляем уведомление пользователю
+
         auth()->user()->notify(new ProfileUpdatedNotification($updatedField));
 
         return redirect()->route('admin.users.index')->with('success', 'Your profile has been updated and you have been notified.');
     }
 
-    // Показать форму для редактирования пользователя
     public function edit(User $user)
     {
         return view('admin.users.edit', compact('user'));
     }
 
-    // Обновить данные пользователя
     public function update(Request $request, User $user)
     {
         $request->validate([
@@ -72,7 +67,6 @@ class UserController extends Controller
         return redirect()->route('admin.users.index')->with('success', 'users data has been successfully updated');
     }
 
-    // Удалить пользователя
     public function destroy(User $user)
     {
         $user->delete();

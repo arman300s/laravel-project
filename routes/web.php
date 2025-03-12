@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\BooksController;
-use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth; // Добавляем Auth
 use App\Http\Controllers\admin\BooksController as AdminBookController;
 use App\Http\Controllers\user\BooksController as UserBookController;
 use App\Http\Controllers\admin\UserController as AdminUserController;
-
+use App\Http\Controllers\admin\AdminProfileController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -49,6 +49,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // Аватар
+    Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('avatar.update');
+    Route::delete('/profile/avatar', [ProfileController::class, 'deleteAvatar'])->name('avatar.delete');
 });
 
 require __DIR__.'/auth.php';

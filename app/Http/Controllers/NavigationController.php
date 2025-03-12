@@ -9,7 +9,7 @@ class NavigationController extends Controller
 {
     public function getNavigationData()
     {
-        $user = Auth::user(); // Получаем текущего пользователя
-        return view('layouts.navigation', compact('user')); // Передаем пользователя в представление
+        $user = Auth::user();
+        return view('layouts.navigation', compact('user'));
     }
 }

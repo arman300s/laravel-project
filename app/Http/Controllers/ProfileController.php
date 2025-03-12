@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
-
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 class ProfileController extends Controller
 {
     /**
@@ -56,5 +57,46 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+    public function updateAvatar(Request $request)
+    {
+        $request->validate([
+            'avatar' => 'required|file|max:5120'
+        ]);
+
+        $user = Auth::user();
+
+        if ($user->avatar) {
+            Storage::disk('public')->delete('avatars/' . $user->avatar);
+        }
+
+        // Жаңа аватарды жүктеу
+        $avatarPath = $request->file('avatar')->store('avatars', 'public');
+        $user->avatar = basename($avatarPath);
+        $user->save();
+
+        return back()->with('success', 'Avatar updated successfully!');
+    }
+    /**
+     * Удаление аватара пользователя.
+     */
+    public function deleteAvatar()
+    {
+        $user = Auth::user();
+
+        if ($user->avatar) {
+            // Удаляем файл с диска
+            $avatarPath = 'avatars/' . $user->avatar;
+            if (Storage::disk('public')->exists($avatarPath)) {
+                Storage::disk('public')->delete($avatarPath);
+            }
+
+            $user->avatar = null;
+            $user->save();
+
+            return back()->with('success', 'Avatar deleted successfully!');
+        }
+
+        return back()->with('error', 'No avatar to delete.');
     }
 }

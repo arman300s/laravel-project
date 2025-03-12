@@ -11,45 +11,38 @@
                 <div class="p-6">
                     <h1 class="text-2xl font-semibold mb-6 text-gray-800">Edit User</h1>
 
-                    <!-- Форма редактирования пользователя -->
                     <form action="{{ route('admin.users.update', $user->id) }}" method="POST" class="space-y-6">
                         @csrf
                         @method('PUT')
 
-                        <!-- Имя пользователя -->
                         <div class="form-group">
-                            <label for="name" class="block text-sm font-medium text-gray-700">Name</label> <!-- Имя -->
+                            <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
                             <input type="text" name="name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" value="{{ old('name', $user->name) }}" required>
                         </div>
 
-                        <!-- Email -->
                         <div class="form-group">
-                            <label for="email" class="block text-sm font-medium text-gray-700">Email</label> <!-- Email -->
+                            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
                             <input type="email" name="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" value="{{ old('email', $user->email) }}" required>
                         </div>
 
-                        <!-- Пароль (если не хотите менять, оставьте пустым) -->
                         <div class="form-group">
-                            <label for="password" class="block text-sm font-medium text-gray-700">Password (leave empty if you don't want to change)</label> <!-- Пароль -->
+                            <label for="password" class="block text-sm font-medium text-gray-700">Password (leave empty if you don't want to change)</label>
                             <input type="password" name="password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         </div>
 
-                        <!-- Подтверждение пароля -->
                         <div class="form-group">
-                            <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Password Confirmation</label> <!-- Подтверждение пароля -->
+                            <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Password Confirmation</label>
                             <input type="password" name="password_confirmation" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         </div>
 
-                        <!-- Роль пользователя -->
                         <div class="form-group">
-                            <label for="role" class="block text-sm font-medium text-gray-700">Role</label> <!-- Роль -->
+                            <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
                             <select name="role" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
-                                <option value="user" {{ $user->role == 'user' ? 'selected' : '' }}>User</option> <!-- Пользователь -->
-                                <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Administrator</option> <!-- Администратор -->
+                                <option value="user" {{ $user->role == 'user' ? 'selected' : '' }}>User</option>
+                                <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Administrator</option>
                             </select>
                         </div>
 
-                        <!-- Кнопка для обновления пользователя -->
                         <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             Update User
                         </button>
