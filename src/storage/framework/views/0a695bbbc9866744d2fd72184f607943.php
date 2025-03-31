@@ -1,0 +1,2 @@
+<img src="<?php echo e(asset('logo.png')); ?>" alt="Icon" style="width: 160px; height: 160px;" />
+<?php /**PATH /var/www/laravel-project/resources/views/components/application-logo.blade.php ENDPATH**/ ?>
