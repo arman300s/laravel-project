@@ -23,7 +23,7 @@
                     <p class="text-gray-600 mb-6">This is the dashboard where you can manage all aspects of the application.</p>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <!-- Users Card -->
+
                         <a href="<?php echo e(route('admin.users.index')); ?>"
                            class="border border-gray-200 rounded-lg p-6 hover:bg-gray-50 transition duration-300">
                             <div class="flex items-center">
@@ -37,7 +37,6 @@
                             </div>
                         </a>
 
-                        <!-- Books Card -->
                         <a href="<?php echo e(route('admin.books.index')); ?>"
                            class="border border-gray-200 rounded-lg p-6 hover:bg-gray-50 transition duration-300">
                             <div class="flex items-center">
@@ -51,7 +50,6 @@
                             </div>
                         </a>
 
-                        <!-- Book Views Card -->
                         <a href="<?php echo e(route('admin.book.views')); ?>"
                            class="border border-gray-200 rounded-lg p-6 hover:bg-gray-50 transition duration-300">
                             <div class="flex items-center">
