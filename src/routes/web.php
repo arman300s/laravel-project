@@ -5,14 +5,16 @@ use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth; // Добавляем Auth
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\admin\BooksController as AdminBookController;
 use App\Http\Controllers\user\BooksController as UserBookController;
 use App\Http\Controllers\admin\UserController as AdminUserController;
-use App\Http\Controllers\admin\AdminProfileController;
+use App\Http\Controllers\admin\BorrowingController;
+
 Route::get('/', function () {
     return view('welcome');
 });
+
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])
         ->name('admin.dashboard');
@@ -25,12 +27,15 @@ Route::middleware('auth')->group(function () {
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::resource('books', AdminBookController::class);
     Route::post('books/{id}/toggle', [AdminBookController::class, 'toggleActive'])->name('books.toggleActive');
-});
 
+    Route::resource('borrowings', BorrowingController::class);
+});
+Route::post('/books/{book}/borrow', [UserBookController::class, 'borrow'])->name('user.books.borrow');
 Route::prefix('user')->name('user.')->group(function () {
     Route::get('books', [UserBookController::class, 'index'])->name('books.index');
 });
-
+Route::get('/books', [UserBookController::class, 'index'])->name('books.index');
+Route::get('/books/{book}/borrow', [UserBookController::class, 'borrow'])->name('books.borrow');
 Route::get('/admin/books/{book}/download', [AdminBookController::class, 'downloadPdf'])->name('admin.books.download');
 Route::get('/books/{book}/download', [UserBookController::class, 'downloadPdf'])->name('books.download');
 

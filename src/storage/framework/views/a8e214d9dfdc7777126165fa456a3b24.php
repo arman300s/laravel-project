@@ -19,31 +19,55 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    <h1 class="text-4xl font-semibold mb-4 text-gray-800">Welcome, Admin!</h1>
-                    <p class="text-lg text-gray-600">This is the dashboard where you can manage all aspects of the application.</p>
+                    <h1 class="text-2xl font-semibold mb-4 text-gray-800">Welcome, Admin!</h1>
+                    <p class="text-gray-600 mb-6">This is the dashboard where you can manage all aspects of the application.</p>
 
-                    <div class="mt-6 flex flex-wrap gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Users Card -->
                         <a href="<?php echo e(route('admin.users.index')); ?>"
-                           class="px-6 py-3 rounded-lg shadow-md font-semibold transition duration-300
-                           <?php echo e(request()->routeIs('admin.users.index') ? ' text-black' : 'bg-blue-600 text-black hover:bg-blue-700'); ?>">
-                            👤 Manage Users
+                           class="border border-gray-200 rounded-lg p-6 hover:bg-gray-50 transition duration-300">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-blue-100 text-blue-600 mr-4">
+                                    👤
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-lg text-gray-800">Manage Users</h3>
+                                    <p class="text-gray-500 text-sm">View and manage all system users</p>
+                                </div>
+                            </div>
                         </a>
 
+                        <!-- Books Card -->
                         <a href="<?php echo e(route('admin.books.index')); ?>"
-                           class="px-6 py-3 rounded-lg shadow-md font-semibold transition duration-300
-                           <?php echo e(request()->routeIs('admin.books.index') ? ' text-black' : 'bg-green-600 text-black hover:bg-green-700'); ?>">
-                            📚 Manage Books
+                           class="border border-gray-200 rounded-lg p-6 hover:bg-gray-50 transition duration-300">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-green-100 text-green-600 mr-4">
+                                    📚
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-lg text-gray-800">Manage Books</h3>
+                                    <p class="text-gray-500 text-sm">View and manage all books</p>
+                                </div>
+                            </div>
                         </a>
 
+                        <!-- Book Views Card -->
                         <a href="<?php echo e(route('admin.book.views')); ?>"
-                           class="px-6 py-3 rounded-lg shadow-md font-semibold transition duration-300
-                           <?php echo e(request()->routeIs('admin.book.views') ?  : ' text-black hover:bg-purple-700'); ?>">
-                            📊 View Book Views
+                           class="border border-gray-200 rounded-lg p-6 hover:bg-gray-50 transition duration-300">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-purple-100 text-purple-600 mr-4">
+                                    📊
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-lg text-gray-800">Book Views</h3>
+                                    <p class="text-gray-500 text-sm">View book statistics and analytics</p>
+                                </div>
+                            </div>
                         </a>
                     </div>
+                </div>
             </div>
         </div>
-    </div>
     </div>
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>

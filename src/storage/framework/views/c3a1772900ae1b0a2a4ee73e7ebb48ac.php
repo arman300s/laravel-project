@@ -24,21 +24,21 @@
                     <p class="text-gray-600 mb-4">Here you can manage books efficiently.</p>
 
                     <a href="<?php echo e(route('admin.books.create')); ?>"
-                       class="bg-indigo-600 text-black px-6 py-2 rounded-md font-semibold hover:bg-indigo-700 transition-all duration-300 shadow-md">
+                       class="bg-indigo-600 text-white px-6 py-2 rounded-md font-semibold hover:bg-indigo-700 transition-all duration-300 shadow-md transform hover:scale-105">
                         ➕ Add Book
                     </a>
                 </div>
 
                 <div class="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     <?php $__currentLoopData = $books; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $book): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <div class="bg-gray-100 p-5 rounded-lg shadow-md hover:shadow-lg transition-all">
-                            <h2 class="text-xl font-bold mb-2 text-gray-800"><?php echo e($book->title); ?></h2>
+                        <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                            <h2 class="text-2xl font-bold mb-2 text-gray-800"><?php echo e($book->title); ?></h2>
                             <p class="text-gray-600 mb-3"><?php echo e(Str::limit($book->description, 150)); ?></p>
 
-                            <div class="flex items-center space-x-8 mt-4">
+                            <div class="flex items-center space-x-6 mt-4">
 
                                 <a href="<?php echo e(route('admin.books.edit', $book->id)); ?>"
-                                   class="text-yellow-500 font-semibold hover:text-yellow-600 transition">
+                                   class="text-yellow-500 font-semibold hover:text-yellow-600 transition duration-200">
                                     ✏️ Edit
                                 </a>
 
@@ -46,17 +46,19 @@
                                     <?php echo csrf_field(); ?>
                                     <?php echo method_field('DELETE'); ?>
                                     <button type="submit"
-                                            class="text-red-500 font-semibold hover:text-red-600 transition">
+                                            class="text-red-500 font-semibold hover:text-red-600 transition duration-200">
                                         🗑️ Delete
                                     </button>
                                 </form>
+
                                 <a href="<?php echo e(route('admin.books.show', $book->id)); ?>"
-                                   class="text-yellow-500 font-semibold hover:text-yellow-600 transition">
-                                    🔎More details
+                                   class="text-blue-500 font-semibold hover:text-blue-600 transition duration-200">
+                                    🔎 More details
                                 </a>
+
                                 <!-- Download PDF -->
                                 <a href="<?php echo e(route('books.download', $book->id)); ?>"
-                                   class="text-blue-500 font-semibold hover:text-blue-600 transition">
+                                   class="text-blue-500 font-semibold hover:text-blue-600 transition duration-200">
                                     📥 Download PDF
                                 </a>
                             </div>

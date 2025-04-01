@@ -16,4 +16,12 @@ class AdminController extends Controller
         $views = BookView::with(['user', 'book'])->latest()->get();
         return view('admin.books.views', compact('views'));
     }
+    public function dashboard()
+    {
+        return view('admin.dashboard', [
+            'categories' => Category::count(),
+            'borrowings' => Borrowing::count(),
+            'reservations' => Reservation::count(),
+        ]);
+    }
 }

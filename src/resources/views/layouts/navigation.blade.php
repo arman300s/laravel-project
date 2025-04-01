@@ -24,6 +24,11 @@
                         {{ __('Manage Users') }}
                     </x-nav-link>
                 @endif
+                @if($role === 'admin')
+                    <x-nav-link :href="route('admin.borrowings.index')" :active="request()->routeIs('admin.borrowings.index')">
+                        {{ __('Borrowing') }}
+                    </x-nav-link>
+                @endif
             </div>
 
             <div class="hidden sm:flex items-center space-x-3">
@@ -48,10 +53,7 @@
                         </form>
                     </x-slot>
                 </x-dropdown>
-                <div class="relative w-16 h-16 overflow-hidden rounded-full border-2 border-gray-300 shadow-md">
-                    <img src="{{ Auth::user()->avatar ? asset('storage/avatars/' . Auth::user()->avatar) : asset('images/default-avatar.png') }}"
-                         alt="User Avatar" class="w-full h-full object-cover">
-                </div>
+
             </div>
 
             <div class="-me-2 flex items-center sm:hidden">
