@@ -55,7 +55,7 @@
                                     🔎More details
                                 </a>
                                 <!-- Download PDF -->
-                                <a href="<?php echo e(route('books.download', $book->id)); ?>"
+                                <a href="<?php echo e(route('admin.books.download', $book->id)); ?>"
                                    class="text-blue-500 font-semibold hover:text-blue-600 transition">
                                     📥 Download PDF
                                 </a>

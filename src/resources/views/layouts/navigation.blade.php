@@ -19,6 +19,11 @@
                     {{ __('Books') }}
                 </x-nav-link>
 
+                <!-- Add Reservations link -->
+                <x-nav-link :href="route($role . '.reservations.index')" :active="request()->routeIs($role . '.reservations.index')">
+                    {{ $role === 'admin' ? __('Manage Reservations') : __('My Reservations') }}
+                </x-nav-link>
+
                 @if($role === 'admin')
                     <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index')">
                         {{ __('Manage Users') }}
@@ -26,6 +31,7 @@
                 @endif
             </div>
 
+            <!-- Rest of your navigation code remains the same -->
             <div class="hidden sm:flex items-center space-x-3">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
@@ -69,6 +75,18 @@
         <x-responsive-nav-link :href="route($dashboardRoute)" :active="request()->routeIs($dashboardRoute)">
             {{ __('Dashboard') }}
         </x-responsive-nav-link>
+        <x-responsive-nav-link :href="route($role . '.books.index')" :active="request()->routeIs($role . '.books.index')">
+            {{ __('Books') }}
+        </x-responsive-nav-link>
+        <!-- Add Reservations link for mobile -->
+        <x-responsive-nav-link :href="route($role . '.reservations.index')" :active="request()->routeIs($role . '.reservations.index')">
+            {{ $role === 'admin' ? __('Manage Reservations') : __('My Reservations') }}
+        </x-responsive-nav-link>
+        @if($role === 'admin')
+            <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index')">
+                {{ __('Manage Users') }}
+            </x-responsive-nav-link>
+        @endif
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
                 <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>

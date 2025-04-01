@@ -45,7 +45,7 @@
                                     🔎More details
                                 </a>
                                 <!-- Download PDF -->
-                                <a href="{{ route('books.download', $book->id) }}"
+                                <a href="{{ route('admin.books.download', $book->id) }}"
                                    class="text-blue-500 font-semibold hover:text-blue-600 transition">
                                     📥 Download PDF
                                 </a>

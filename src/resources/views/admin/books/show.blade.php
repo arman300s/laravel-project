@@ -17,7 +17,7 @@
 
 
                 <div class="mt-6 flex space-x-4">
-                    <a href="{{ route('books.download', $book->id) }}"
+                    <a href="{{ route('admin.books.download', $book->id) }}"
                        class="inline-flex items-center px-6 py-3  text-black text-lg font-medium rounded-lg shadow-md hover:bg-blue-700 transition">
                         📥 Download PDF
                     </a>

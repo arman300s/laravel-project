@@ -26,9 +26,9 @@
 
                         </div>
 
-                        <a href="{{ route('books.download', $book->id) }}"
-                           class="  text-black font-bold text-lg ">
-                            📥 <strong>Download PDF</strong>
+                        <a href="{{ route('user.books.download', $book->id) }}"
+                           class="text-blue-500 font-semibold hover:text-blue-600 transition">
+                            📥 Download PDF
                         </a>
 
                     @endforeach
