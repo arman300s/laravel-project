@@ -19,7 +19,12 @@
                     {{ __('Books') }}
                 </x-nav-link>
 
-                <!-- Add Reservations link -->
+                <!-- Categories Link -->
+                <x-nav-link :href="route($role . '.categories.index')" :active="request()->routeIs($role . '.categories.*')">
+                    {{ $role === 'admin' ? __('Manage Categories') : __('Categories') }}
+                </x-nav-link>
+
+                <!-- Reservations link -->
                 <x-nav-link :href="route($role . '.reservations.index')" :active="request()->routeIs($role . '.reservations.index')">
                     {{ $role === 'admin' ? __('Manage Reservations') : __('My Reservations') }}
                 </x-nav-link>
@@ -78,10 +83,17 @@
         <x-responsive-nav-link :href="route($role . '.books.index')" :active="request()->routeIs($role . '.books.index')">
             {{ __('Books') }}
         </x-responsive-nav-link>
-        <!-- Add Reservations link for mobile -->
+
+        <!-- Categories Link for mobile -->
+        <x-responsive-nav-link :href="route($role . '.categories.index')" :active="request()->routeIs($role . '.categories.*')">
+            {{ $role === 'admin' ? __('Manage Categories') : __('Categories') }}
+        </x-responsive-nav-link>
+
+        <!-- Reservations link for mobile -->
         <x-responsive-nav-link :href="route($role . '.reservations.index')" :active="request()->routeIs($role . '.reservations.index')">
             {{ $role === 'admin' ? __('Manage Reservations') : __('My Reservations') }}
         </x-responsive-nav-link>
+
         @if($role === 'admin')
             <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index')">
                 {{ __('Manage Users') }}

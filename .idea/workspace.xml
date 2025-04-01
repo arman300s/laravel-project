@@ -5,30 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="34d56555-25fa-425b-8408-d53e2d0ee843" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/resources/views/admin/reservations/create.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resources/views/admin/reservations/edit.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resources/views/admin/reservations/index.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resources/views/admin/reservations/show.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resources/views/components/admin/layout.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resources/views/components/user/layout.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resources/views/user/reservations/create.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resources/views/user/reservations/index.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resources/views/user/reservations/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/database/migrations/2025_04_01_202845_add_active_to_categories_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resources/views/admin/categories/create.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resources/views/admin/categories/edit.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resources/views/admin/categories/index.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resources/views/admin/categories/show.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resources/views/user/categories/index.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resources/views/user/categories/show.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Providers/AppServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/views/admin/books/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/views/admin/books/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/views/admin/books/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/views/admin/books/show.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/resources/views/layouts/navigation.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/views/layouts/navigation.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/views/user/books/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/views/user/books/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/storage/framework/sessions/5D26bo7HeRfygYUofklADkAANMxUGJZys44XvBUN" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/storage/framework/sessions/ZAOJ7MEOVNfUSLraeLENf5I4CH4fCVP6Tz8FFvvB" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/storage/framework/sessions/mvsZmIiOykW3kvhyzA7ChA5PjV9KVgFIVL3Ns4bl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/storage/framework/sessions/xRwmKhzGRVQt6cZs8EdPO9AvANoBDNf0bWSxPXht" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/storage/framework/sessions/yilcBlXAOF44ZYInUsoaJhW5IxIRreZQwBi8ws4h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/storage/framework/sessions/AiKgoqx6AV2hiy4Cl9dpzvEzGrl1dbz0qEHIcPs8" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/storage/framework/sessions/w8r4AQJuvjMeesOCQFMMr5rWNPqOLjQPZ8MZqSfo" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/storage/framework/views/3e84db0edadf8ac2098837b5c4908b34.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/storage/framework/views/3e84db0edadf8ac2098837b5c4908b34.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/storage/framework/views/c3a1772900ae1b0a2a4ee73e7ebb48ac.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/storage/framework/views/c3a1772900ae1b0a2a4ee73e7ebb48ac.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/src/storage/logs/laravel.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -185,7 +174,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/satba/PhpstormProjects/laravel-project/src/resources/views/user",
+    "last_opened_file_path": "C:/Users/satba/PhpstormProjects/laravel-project/src/resources/views",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -201,10 +190,14 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\satba\PhpstormProjects\laravel-project\src\resources\views" />
+      <recent name="C:\Users\satba\PhpstormProjects\laravel-project\src\resources\views\admin\categories" />
       <recent name="C:\Users\satba\PhpstormProjects\laravel-project\src\resources\views\user" />
       <recent name="C:\Users\satba\PhpstormProjects\laravel-project\src\resources\views\admin" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\satba\PhpstormProjects\laravel-project\src\resources\views\user" />
+      <recent name="C:\Users\satba\PhpstormProjects\laravel-project\src\resources\views\admin\categories" />
       <recent name="C:\Users\satba\PhpstormProjects\laravel-project\src\resources\views\layouts" />
       <recent name="C:\Users\satba\PhpstormProjects\laravel-project\src\resources\views" />
       <recent name="C:\Users\satba\PhpstormProjects\laravel-project\src\resources\views\admin" />
@@ -227,7 +220,7 @@
       <option name="presentableId" value="Default" />
       <updated>1743445111636</updated>
       <workItem from="1743445113333" duration="2479000" />
-      <workItem from="1743533726042" duration="2596000" />
+      <workItem from="1743533726042" duration="6252000" />
     </task>
     <servers />
   </component>

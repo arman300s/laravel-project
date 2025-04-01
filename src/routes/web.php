@@ -5,13 +5,14 @@ use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\admin\BooksController as AdminBookController;
 use App\Http\Controllers\user\BooksController as UserBookController;
 use App\Http\Controllers\admin\UserController as AdminUserController;
 use App\Http\Controllers\admin\AdminProfileController;
 use App\Http\Controllers\Admin\ReservationController as AdminReservationController;
 use App\Http\Controllers\User\ReservationController as UserReservationController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\User\CategoryController as UserCategoryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -39,6 +40,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
     // Reservations
     Route::resource('reservations', AdminReservationController::class);
+
+    // Categories
+    Route::resource('categories', AdminCategoryController::class);
+    Route::post('categories/{category}/toggle', [AdminCategoryController::class, 'toggleActive'])
+        ->name('categories.toggleActive');
 });
 
 // User Routes
@@ -56,6 +62,11 @@ Route::middleware('auth')->group(function () {
         ]);
         Route::post('reservations/{reservation}/cancel', [UserReservationController::class, 'cancel'])
             ->name('reservations.cancel');
+
+        // Categories
+        Route::get('categories', [UserCategoryController::class, 'index'])->name('categories.index');
+        Route::get('categories/{category}', [UserCategoryController::class, 'show'])->name('categories.show');
+        Route::get('categories/search', [UserCategoryController::class, 'search'])->name('categories.search');
     });
 
     // Profile Routes (not prefixed)
