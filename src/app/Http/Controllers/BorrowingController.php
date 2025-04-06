@@ -182,8 +182,17 @@ class BorrowingController extends Controller
      */
     public function adminDestroy(Borrowing $borrowing)
     {
+        if($borrowing->status == 'active' || $borrowing->status == 'overdue' ){
+            return redirect()->route('admin.borrowings.index')
+                ->with('success', 'You cannot delete this borrowing.(Status: active, overdue)');
+        }
+        else if($borrowing->status == 'returned'){
+            $borrowing->delete();
+            return redirect()->route('admin.borrowings.index')
+                ->with('success', 'Borrowing deleted successfully.');
+        }
+        $borrowing->book->increment('available_copies');
         $borrowing->delete();
-
         return redirect()->route('admin.borrowings.index')
             ->with('success', 'Borrowing deleted successfully.');
     }

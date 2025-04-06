@@ -89,7 +89,7 @@
                             <div class="pt-4 border-t mt-4">
                                 <form action="{{ route('admin.borrowings.return', $borrowing) }}" method="POST">
                                     @csrf
-                                    <button type="submit" class="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-200">
+                                    <button type="submit" class="mt-4 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-200">
                                         Mark as Returned
                                     </button>
                                 </form>
