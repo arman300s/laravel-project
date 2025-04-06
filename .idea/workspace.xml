@@ -7,7 +7,6 @@
     <list default="true" id="9f4eb7bd-5a9c-4a9f-8477-a5d2904c1dcb" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/Http/Controllers/BorrowingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Http/Controllers/BorrowingController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Models/Book.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Models/Book.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/Models/Borrowing.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Models/Borrowing.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -198,6 +197,9 @@
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="2vBUS0z8SINVsXoKADzUASPdoVz" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -266,7 +268,7 @@
       <workItem from="1743782108998" duration="665000" />
       <workItem from="1743820960926" duration="68878000" />
       <workItem from="1743933056426" duration="1004000" />
-      <workItem from="1743949902153" duration="2592000" />
+      <workItem from="1743949902153" duration="11180000" />
     </task>
     <servers />
   </component>

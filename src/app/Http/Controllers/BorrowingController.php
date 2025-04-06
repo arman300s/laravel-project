@@ -158,8 +158,6 @@ class BorrowingController extends Controller
             'status' => 'sometimes|in:pending,active,returned,overdue',
             'description' => 'nullable|string',
         ]);
-
-        // Если статус меняется на returned, увеличиваем available_copies
         if (isset($validated['status']) && $validated['status'] === 'returned' && $borrowing->status !== 'returned') {
             $borrowing->book->increment('available_copies');
         }
