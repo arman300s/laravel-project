@@ -23,6 +23,20 @@ class Book extends Model
         'file_epub',
     ];
 
+    protected static function booted()
+    {
+        static::saving(function ($book) {
+            // Гарантируем, что available_copies не превышает total_copies
+            if ($book->available_copies > $book->total_copies) {
+                $book->available_copies = $book->total_copies;
+            }
+            // Гарантируем, что available_copies не отрицательное
+            if ($book->available_copies < 0) {
+                $book->available_copies = 0;
+            }
+        });
+    }
+
     public function author()
     {
         return $this->belongsTo(Author::class);
@@ -45,25 +59,20 @@ class Book extends Model
 
     public function isAvailable(): bool
     {
-        return $this->available_copies > 0 && $this->reservations()->where('status', 'pending')->count() == 0;
-    }
-
-    public function isReservable(): bool
-    {
-        return $this->available_copies > 0 && $this->reservations()->where('status', 'pending')->count() == 0 && $this->borrowings()->where('status', 'active')->count() == 0;
+        return $this->available_copies > 0;
     }
 
     public function getAvailableFormats()
     {
         $formats = [];
         if ($this->file_pdf) {
-            $formats['pdf'] = asset('storage/books/' . $this->file_pdf);
+            $formats['pdf'] = asset('storage/' . $this->file_pdf);
         }
         if ($this->file_docx) {
-            $formats['docx'] = asset('storage/books/' . $this->file_docx);
+            $formats['docx'] = asset('storage/' . $this->file_docx);
         }
         if ($this->file_epub) {
-            $formats['epub'] = asset('storage/books/' . $this->file_epub);
+            $formats['epub'] = asset('storage/' . $this->file_epub);
         }
         return $formats;
     }

@@ -48,11 +48,27 @@ class BorrowingController extends Controller
             'description' => 'nullable|string',
         ]);
 
+        $book = Book::findOrFail($validated['book_id']);
+
+        if ($book->available_copies <= 0) {
+            return back()->withErrors(['book_id' => 'No available copies of this book.']);
+        }
+
+        $alreadyBorrowed = Borrowing::where('user_id', auth()->id())
+            ->where('book_id', $validated['book_id'])
+            ->whereIn('status', ['pending', 'active', 'overdue'])
+            ->exists();
+
+        if ($alreadyBorrowed) {
+            return back()->withErrors(['book_id' => 'You already have this book borrowed.']);
+        }
+
         $validated['user_id'] = auth()->id();
         $validated['borrowed_at'] = now();
         $validated['status'] = 'pending';
 
         Borrowing::create($validated);
+        $book->decrement('available_copies');
 
         return redirect()->route('user.borrowings.index')
             ->with('success', 'Borrowing request submitted successfully.');
@@ -89,6 +105,16 @@ class BorrowingController extends Controller
             'status' => 'sometimes|in:pending,active,returned,overdue',
             'description' => 'nullable|string',
         ]);
+
+        $book = Book::findOrFail($validated['book_id']);
+
+        // Если статус не returned, уменьшаем available_copies
+        if (($validated['status'] ?? 'active') !== 'returned') {
+            if ($book->available_copies <= 0) {
+                return back()->withErrors(['book_id' => 'No available copies of this book.']);
+            }
+            $book->decrement('available_copies');
+        }
 
         $validated['borrowed_at'] = now();
         $validated['status'] = $validated['status'] ?? 'active';
@@ -133,6 +159,18 @@ class BorrowingController extends Controller
             'description' => 'nullable|string',
         ]);
 
+        // Если статус меняется на returned, увеличиваем available_copies
+        if (isset($validated['status']) && $validated['status'] === 'returned' && $borrowing->status !== 'returned') {
+            $borrowing->book->increment('available_copies');
+        }
+        // Если статус меняется с returned на другой, уменьшаем available_copies
+        elseif (isset($validated['status']) && $borrowing->status === 'returned' && $validated['status'] !== 'returned') {
+            if ($borrowing->book->available_copies <= 0) {
+                return back()->withErrors(['status' => 'No available copies of this book.']);
+            }
+            $borrowing->book->decrement('available_copies');
+        }
+
         $borrowing->update($validated);
 
         return redirect()->route('admin.borrowings.index')
@@ -145,6 +183,7 @@ class BorrowingController extends Controller
     public function adminDestroy(Borrowing $borrowing)
     {
         $borrowing->delete();
+
         return redirect()->route('admin.borrowings.index')
             ->with('success', 'Borrowing deleted successfully.');
     }
@@ -161,6 +200,8 @@ class BorrowingController extends Controller
             'status' => 'returned'
         ]);
 
+        $borrowing->book->increment('available_copies');
+
         return redirect()->route('user.borrowings.index')
             ->with('success', 'Book returned successfully.');
     }
@@ -170,10 +211,18 @@ class BorrowingController extends Controller
      */
     public function adminReturn(Borrowing $borrowing)
     {
+        // Если книга уже возвращена, ничего не делаем
+        if ($borrowing->status === 'returned') {
+            return redirect()->route('admin.borrowings.index')
+                ->with('warning', 'Book already returned.');
+        }
+
         $borrowing->update([
             'returned_at' => now(),
             'status' => 'returned'
         ]);
+
+        $borrowing->book->increment('available_copies');
 
         return redirect()->route('admin.borrowings.index')
             ->with('success', 'Book returned successfully.');

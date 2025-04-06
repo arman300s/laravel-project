@@ -26,9 +26,29 @@ class Borrowing extends Model
         'due_at' => 'datetime',
     ];
 
+    public const STATUS_PENDING = 'pending';
     public const STATUS_ACTIVE = 'active';
     public const STATUS_RETURNED = 'returned';
     public const STATUS_OVERDUE = 'overdue';
+
+    protected static function booted()
+    {
+        static::creating(function ($borrowing) {
+            // При создании бронирования устанавливаем borrowed_at, если не установлен
+            if (empty($borrowing->borrowed_at)) {
+                $borrowing->borrowed_at = now();
+            }
+        });
+
+        static::updating(function ($borrowing) {
+            // При изменении статуса на returned устанавливаем returned_at, если не установлен
+            if ($borrowing->isDirty('status') &&
+                $borrowing->status === self::STATUS_RETURNED &&
+                empty($borrowing->returned_at)) {
+                $borrowing->returned_at = now();
+            }
+        });
+    }
 
     public function book(): BelongsTo
     {
@@ -43,6 +63,7 @@ class Borrowing extends Model
     public function getStatusLabelAttribute(): string
     {
         return match($this->status) {
+            self::STATUS_PENDING => 'Pending',
             self::STATUS_ACTIVE => 'Active',
             self::STATUS_RETURNED => 'Returned',
             self::STATUS_OVERDUE => 'Overdue',
