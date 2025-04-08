@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="9f4eb7bd-5a9c-4a9f-8477-a5d2904c1dcb" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Http/Controllers/BorrowingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Http/Controllers/BorrowingController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Models/Borrowing.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Models/Borrowing.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -204,26 +202,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/satba/PhpstormProjects/team-project/src/resources/views/user",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\PhpStorm 2024.3.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/satba/PhpstormProjects/team-project/src/resources/views/user&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\PhpStorm 2024.3.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\satba\PhpstormProjects\team-project\src\resources\views\user" />
@@ -268,7 +266,15 @@
       <workItem from="1743782108998" duration="665000" />
       <workItem from="1743820960926" duration="68878000" />
       <workItem from="1743933056426" duration="1004000" />
-      <workItem from="1743949902153" duration="11180000" />
+      <workItem from="1743949902153" duration="11390000" />
+      <workItem from="1743971598246" duration="655000" />
+      <workItem from="1743972850205" duration="433000" />
+      <workItem from="1743973649137" duration="10000" />
+      <workItem from="1744019076204" duration="1236000" />
+      <workItem from="1744038351589" duration="638000" />
+      <workItem from="1744089647952" duration="689000" />
+      <workItem from="1744091255709" duration="581000" />
+      <workItem from="1744095272943" duration="1069000" />
     </task>
     <servers />
   </component>
