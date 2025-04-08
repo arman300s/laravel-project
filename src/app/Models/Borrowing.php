@@ -18,6 +18,7 @@ class Borrowing extends Model
         'due_at',
         'status',
         'description',
+        'from_reservation_id',
     ];
 
     protected $casts = [
@@ -104,6 +105,10 @@ class Borrowing extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+    public function reservation()
+    {
+        return $this->belongsTo(Reservation::class, 'from_reservation_id');
     }
 
     /**

@@ -61,9 +61,9 @@ class BookController extends Controller
             'category_id' => 'required|exists:categories,id',
             'available_copies' => 'required|integer|min:0',
             'total_copies' => 'required|integer|min:0|gte:available_copies',
-            'file_pdf' => 'nullable|file|mimes:pdf|max:20480',
-            'file_docx' => 'nullable|file|mimes:docx|max:20480',
-            'file_epub' => 'nullable|file|mimes:epub|max:20480',
+            'file_pdf' => 'nullable|file|mimes:pdf|max:204800',
+            'file_docx' => 'nullable|file|mimes:docx|max:204800',
+            'file_epub' => 'nullable|file|mimes:epub|max:204800',
         ]);
 
         $files = ['pdf', 'docx', 'epub'];

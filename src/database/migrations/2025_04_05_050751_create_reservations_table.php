@@ -17,7 +17,8 @@ return new class extends Migration
             $table->enum('status', [
                 'pending',
                 'completed',
-                'canceled'
+                'canceled',
+                'active',
             ])->default('pending');
             $table->text('description')->nullable();
             $table->timestamps();

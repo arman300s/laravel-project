@@ -5,7 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9f4eb7bd-5a9c-4a9f-8477-a5d2904c1dcb" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/resources/views/user/reservations/create.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resources/views/user/reservations/index.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resources/views/user/reservations/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/bf9e0f7e-c59e-41c6-bc84-b9c9dedf2b79.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/bf9e0f7e-c59e-41c6-bc84-b9c9dedf2b79.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Http/Controllers/BookController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Http/Controllers/BookController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Http/Controllers/BorrowingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Http/Controllers/BorrowingController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Http/Controllers/ReservationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Http/Controllers/ReservationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Models/Book.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Models/Book.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Models/Borrowing.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Models/Borrowing.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Models/Reservation.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Models/Reservation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/migrations/2025_04_05_050342_create_books_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/migrations/2025_04_05_050342_create_books_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/migrations/2025_04_05_050751_create_reservations_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/migrations/2025_04_05_050751_create_reservations_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/views/admin/reservations/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/views/admin/reservations/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/views/admin/reservations/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/views/admin/reservations/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/views/admin/reservations/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/views/admin/reservations/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/views/admin/reservations/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/views/admin/reservations/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/views/layouts/navigation.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/views/layouts/navigation.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -274,7 +294,8 @@
       <workItem from="1744038351589" duration="638000" />
       <workItem from="1744089647952" duration="689000" />
       <workItem from="1744091255709" duration="581000" />
-      <workItem from="1744095272943" duration="1069000" />
+      <workItem from="1744095272943" duration="4933000" />
+      <workItem from="1744101216122" duration="11562000" />
     </task>
     <servers />
   </component>
