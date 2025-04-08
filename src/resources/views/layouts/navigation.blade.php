@@ -7,10 +7,6 @@
                     $dashboardRoute = $role === 'admin' ? 'admin.dashboard' : 'user.dashboard';
                 @endphp
 
-                <a href="{{ route($dashboardRoute) }}" class="shrink-0">
-                    <img src="{{ asset('logo.png') }}" alt="My Logo" class="h-20 w-auto">
-                </a>
-
                 <x-nav-link :href="route($dashboardRoute)" :active="request()->routeIs($dashboardRoute)">
                     {{ $role === 'admin' ? __('Admin Dashboard') : __('Dashboard') }}
                 </x-nav-link>
@@ -19,12 +15,10 @@
                     {{ __('Books') }}
                 </x-nav-link>
 
-                <!-- Categories Link -->
                 <x-nav-link :href="route($role . '.categories.index')" :active="request()->routeIs($role . '.categories.*')">
                     {{ $role === 'admin' ? __('Manage Categories') : __('Categories') }}
                 </x-nav-link>
 
-                <!-- Reservations link -->
                 <x-nav-link :href="route($role . '.reservations.index')" :active="request()->routeIs($role . '.reservations.index')">
                     {{ $role === 'admin' ? __('Manage Reservations') : __('My Reservations') }}
                 </x-nav-link>
@@ -36,7 +30,6 @@
                 @endif
             </div>
 
-            <!-- Rest of your navigation code remains the same -->
             <div class="hidden sm:flex items-center space-x-3">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
@@ -58,11 +51,9 @@
                             </x-dropdown-link>
                         </form>
                     </x-slot>
+
                 </x-dropdown>
-                <div class="relative w-16 h-16 overflow-hidden rounded-full border-2 border-gray-300 shadow-md">
-                    <img src="{{ Auth::user()->avatar ? asset('storage/avatars/' . Auth::user()->avatar) : asset('images/default-avatar.png') }}"
-                         alt="User Avatar" class="w-full h-full object-cover">
-                </div>
+
             </div>
 
             <div class="-me-2 flex items-center sm:hidden">
@@ -84,12 +75,10 @@
             {{ __('Books') }}
         </x-responsive-nav-link>
 
-        <!-- Categories Link for mobile -->
         <x-responsive-nav-link :href="route($role . '.categories.index')" :active="request()->routeIs($role . '.categories.*')">
             {{ $role === 'admin' ? __('Manage Categories') : __('Categories') }}
         </x-responsive-nav-link>
 
-        <!-- Reservations link for mobile -->
         <x-responsive-nav-link :href="route($role . '.reservations.index')" :active="request()->routeIs($role . '.reservations.index')">
             {{ $role === 'admin' ? __('Manage Reservations') : __('My Reservations') }}
         </x-responsive-nav-link>

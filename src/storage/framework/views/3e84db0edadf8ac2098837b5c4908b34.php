@@ -7,10 +7,6 @@
                     $dashboardRoute = $role === 'admin' ? 'admin.dashboard' : 'user.dashboard';
                 ?>
 
-                <a href="<?php echo e(route($dashboardRoute)); ?>" class="shrink-0">
-                    <img src="<?php echo e(asset('logo.png')); ?>" alt="My Logo" class="h-20 w-auto">
-                </a>
-
                 <?php if (isset($component)) { $__componentOriginalc295f12dca9d42f28a259237a5724830 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc295f12dca9d42f28a259237a5724830 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.nav-link','data' => ['href' => route($dashboardRoute),'active' => request()->routeIs($dashboardRoute)]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
@@ -57,7 +53,6 @@
 <?php unset($__componentOriginalc295f12dca9d42f28a259237a5724830); ?>
 <?php endif; ?>
 
-                <!-- Categories Link -->
                 <?php if (isset($component)) { $__componentOriginalc295f12dca9d42f28a259237a5724830 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc295f12dca9d42f28a259237a5724830 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.nav-link','data' => ['href' => route($role . '.categories.index'),'active' => request()->routeIs($role . '.categories.*')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
@@ -81,7 +76,6 @@
 <?php unset($__componentOriginalc295f12dca9d42f28a259237a5724830); ?>
 <?php endif; ?>
 
-                <!-- Reservations link -->
                 <?php if (isset($component)) { $__componentOriginalc295f12dca9d42f28a259237a5724830 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc295f12dca9d42f28a259237a5724830 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.nav-link','data' => ['href' => route($role . '.reservations.index'),'active' => request()->routeIs($role . '.reservations.index')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
@@ -131,7 +125,6 @@
                 <?php endif; ?>
             </div>
 
-            <!-- Rest of your navigation code remains the same -->
             <div class="hidden sm:flex items-center space-x-3">
                 <?php if (isset($component)) { $__componentOriginaldf8083d4a852c446488d8d384bbc7cbe = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginaldf8083d4a852c446488d8d384bbc7cbe = $attributes; } ?>
@@ -210,9 +203,9 @@
 <?php $component = $__componentOriginaldf8083d4a852c446488d8d384bbc7cbe; ?>
 <?php unset($__componentOriginaldf8083d4a852c446488d8d384bbc7cbe); ?>
 <?php endif; ?>
-                <div class="relative w-16 h-16 overflow-hidden rounded-full border-2 border-gray-300 shadow-md">
-                    <img src="<?php echo e(Auth::user()->avatar ? asset('storage/avatars/' . Auth::user()->avatar) : asset('images/default-avatar.png')); ?>"
-                         alt="User Avatar" class="w-full h-full object-cover">
+                <div class="relative w-10 h-10 overflow-hidden rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-bold">
+                    <?php echo e(strtoupper(substr(Auth::user()->name, 0, 1))); ?>
+
                 </div>
             </div>
 
@@ -273,7 +266,6 @@
 <?php unset($__componentOriginald69b52d99510f1e7cd3d80070b28ca18); ?>
 <?php endif; ?>
 
-        <!-- Categories Link for mobile -->
         <?php if (isset($component)) { $__componentOriginald69b52d99510f1e7cd3d80070b28ca18 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginald69b52d99510f1e7cd3d80070b28ca18 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.responsive-nav-link','data' => ['href' => route($role . '.categories.index'),'active' => request()->routeIs($role . '.categories.*')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
@@ -297,7 +289,6 @@
 <?php unset($__componentOriginald69b52d99510f1e7cd3d80070b28ca18); ?>
 <?php endif; ?>
 
-        <!-- Reservations link for mobile -->
         <?php if (isset($component)) { $__componentOriginald69b52d99510f1e7cd3d80070b28ca18 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginald69b52d99510f1e7cd3d80070b28ca18 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.responsive-nav-link','data' => ['href' => route($role . '.reservations.index'),'active' => request()->routeIs($role . '.reservations.index')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>

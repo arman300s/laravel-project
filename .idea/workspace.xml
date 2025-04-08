@@ -5,19 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="34d56555-25fa-425b-8408-d53e2d0ee843" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/database/migrations/2025_04_01_202845_add_active_to_categories_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resources/views/admin/categories/create.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resources/views/admin/categories/edit.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resources/views/admin/categories/index.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resources/views/admin/categories/show.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resources/views/user/categories/index.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resources/views/user/categories/show.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.dockerignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dockerfiles/php.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/06f231d2-488d-4af8-a8e7-335e381e1300.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/06f231d2-488d-4af8-a8e7-335e381e1300/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/06f231d2-488d-4af8-a8e7-335e381e1300/storage_v2/_src_/schema/libdb.wyEjBg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/06f231d2-488d-4af8-a8e7-335e381e1300/storage_v2/_src_/schema/performance_schema.kIw0nw.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dockerfiles/composer.Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/dockerfiles/composer.Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dockerfiles/php.Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/dockerfiles/php.Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nginx/nginx.conf" beforeDir="false" afterPath="$PROJECT_DIR$/nginx/nginx.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/views/layouts/app.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/resources/views/layouts/navigation.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/views/layouts/navigation.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/storage/framework/sessions/AiKgoqx6AV2hiy4Cl9dpzvEzGrl1dbz0qEHIcPs8" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/storage/framework/sessions/w8r4AQJuvjMeesOCQFMMr5rWNPqOLjQPZ8MZqSfo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/storage/framework/sessions/8JarQCd0KvcEoRy60zhdhRtgtVu939Dy6av52Tha" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/storage/framework/views/23ca52c29e0ee6e034af297379eb3941.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/storage/framework/views/288af34b84fdcd0c6ac27c654244f372.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/storage/framework/views/3e84db0edadf8ac2098837b5c4908b34.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/storage/framework/views/3e84db0edadf8ac2098837b5c4908b34.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/storage/framework/views/4d7b1045efc1737638e301a35d303fe8.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/storage/framework/views/68251d9f0cc6ad8fa75a7edc037f331d.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/storage/framework/views/68251d9f0cc6ad8fa75a7edc037f331d.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/storage/framework/views/74672c900f28e9687efca77abd7f4ad0.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/storage/framework/views/91cee31c74dbac8be71756051ac2fff0.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/storage/framework/views/91cee31c74dbac8be71756051ac2fff0.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/storage/framework/views/96952a1c26b4b00893feea9d0ebfdc7a.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/storage/framework/views/f0d61f28f20bd7d69c66497766093e10.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/src/storage/logs/laravel.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -58,36 +71,16 @@
       <path value="$PROJECT_DIR$/src/vendor/symfony/translation" />
       <path value="$PROJECT_DIR$/src/vendor/symfony/string" />
       <path value="$PROJECT_DIR$/src/vendor/symfony/service-contracts" />
-      <path value="$PROJECT_DIR$/src/vendor/theseer/tokenizer" />
-      <path value="$PROJECT_DIR$/src/vendor/symfony/yaml" />
       <path value="$PROJECT_DIR$/src/vendor/symfony/var-dumper" />
       <path value="$PROJECT_DIR$/src/vendor/symfony/uid" />
       <path value="$PROJECT_DIR$/src/vendor/doctrine/inflector" />
       <path value="$PROJECT_DIR$/src/vendor/carbonphp/carbon-doctrine-types" />
-      <path value="$PROJECT_DIR$/src/vendor/hamcrest/hamcrest-php" />
-      <path value="$PROJECT_DIR$/src/vendor/fakerphp/faker" />
       <path value="$PROJECT_DIR$/src/vendor/doctrine/lexer" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/cli-parser" />
       <path value="$PROJECT_DIR$/src/vendor/ralouphie/getallheaders" />
       <path value="$PROJECT_DIR$/src/vendor/phpoption/phpoption" />
       <path value="$PROJECT_DIR$/src/vendor/fruitcake/php-cors" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/complexity" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/comparator" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/code-unit-reverse-lookup" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/code-unit" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/global-state" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/exporter" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/environment" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/diff" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/recursion-context" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/object-reflector" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/object-enumerator" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/lines-of-code" />
       <path value="$PROJECT_DIR$/src/vendor/guzzlehttp/guzzle" />
       <path value="$PROJECT_DIR$/src/vendor/webmozart/assert" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/version" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/type" />
-      <path value="$PROJECT_DIR$/src/vendor/nunomaduro/collision" />
       <path value="$PROJECT_DIR$/src/vendor/guzzlehttp/uri-template" />
       <path value="$PROJECT_DIR$/src/vendor/guzzlehttp/psr7" />
       <path value="$PROJECT_DIR$/src/vendor/guzzlehttp/promises" />
@@ -108,7 +101,6 @@
       <path value="$PROJECT_DIR$/src/vendor/nette/schema" />
       <path value="$PROJECT_DIR$/src/vendor/brick/math" />
       <path value="$PROJECT_DIR$/src/vendor/voku/portable-ascii" />
-      <path value="$PROJECT_DIR$/src/vendor/filp/whoops" />
       <path value="$PROJECT_DIR$/src/vendor/league/config" />
       <path value="$PROJECT_DIR$/src/vendor/league/commonmark" />
       <path value="$PROJECT_DIR$/src/vendor/nikic/php-parser" />
@@ -126,38 +118,26 @@
       <path value="$PROJECT_DIR$/src/vendor/vlucas/phpdotenv" />
       <path value="$PROJECT_DIR$/src/vendor/staabm/side-effects-detector" />
       <path value="$PROJECT_DIR$/src/vendor/laravel/prompts" />
-      <path value="$PROJECT_DIR$/src/vendor/laravel/pint" />
       <path value="$PROJECT_DIR$/src/vendor/laravel/pail" />
       <path value="$PROJECT_DIR$/src/vendor/laravel/framework" />
-      <path value="$PROJECT_DIR$/src/vendor/mockery/mockery" />
       <path value="$PROJECT_DIR$/src/vendor/laravel/tinker" />
       <path value="$PROJECT_DIR$/src/vendor/laravel/serializable-closure" />
-      <path value="$PROJECT_DIR$/src/vendor/laravel/sail" />
-      <path value="$PROJECT_DIR$/src/vendor/phar-io/version" />
-      <path value="$PROJECT_DIR$/src/vendor/phar-io/manifest" />
-      <path value="$PROJECT_DIR$/src/vendor/myclabs/deep-copy" />
       <path value="$PROJECT_DIR$/src/vendor/monolog/monolog" />
-      <path value="$PROJECT_DIR$/src/vendor/phpunit/php-text-template" />
-      <path value="$PROJECT_DIR$/src/vendor/phpunit/php-invoker" />
-      <path value="$PROJECT_DIR$/src/vendor/phpunit/php-file-iterator" />
-      <path value="$PROJECT_DIR$/src/vendor/phpunit/php-code-coverage" />
       <path value="$PROJECT_DIR$/src/vendor/symfony/console" />
       <path value="$PROJECT_DIR$/src/vendor/symfony/clock" />
-      <path value="$PROJECT_DIR$/src/vendor/phpunit/phpunit" />
-      <path value="$PROJECT_DIR$/src/vendor/phpunit/php-timer" />
       <path value="$PROJECT_DIR$/src/vendor/barryvdh/laravel-dompdf" />
       <path value="$PROJECT_DIR$/src/vendor/masterminds/html5" />
       <path value="$PROJECT_DIR$/src/vendor/sabberworm/php-css-parser" />
       <path value="$PROJECT_DIR$/src/vendor/dompdf/php-svg-lib" />
       <path value="$PROJECT_DIR$/src/vendor/dompdf/php-font-lib" />
       <path value="$PROJECT_DIR$/src/vendor/dompdf/dompdf" />
+      <path value="$PROJECT_DIR$/src/vendor/laravel/sanctum" />
       <path value="$PROJECT_DIR$/src/vendor/spatie/backtrace" />
       <path value="$PROJECT_DIR$/src/vendor/spatie/flare-client-php" />
       <path value="$PROJECT_DIR$/src/vendor/spatie/error-solutions" />
-      <path value="$PROJECT_DIR$/src/vendor/laravel/breeze" />
       <path value="$PROJECT_DIR$/src/vendor/spatie/laravel-ignition" />
       <path value="$PROJECT_DIR$/src/vendor/spatie/ignition" />
-      <path value="$PROJECT_DIR$/src/vendor/laravel/sanctum" />
+      <path value="$PROJECT_DIR$/src/vendor/symfony/yaml" />
     </include_path>
   </component>
   <component name="ProjectColorInfo">{
@@ -169,25 +149,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/satba/PhpstormProjects/laravel-project/src/resources/views",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/satba/PhpstormProjects/laravel-project/src/resources/views&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\satba\PhpstormProjects\laravel-project\src\resources\views" />
@@ -220,7 +200,24 @@
       <option name="presentableId" value="Default" />
       <updated>1743445111636</updated>
       <workItem from="1743445113333" duration="2479000" />
-      <workItem from="1743533726042" duration="6252000" />
+      <workItem from="1743533726042" duration="7196000" />
+      <workItem from="1743562978746" duration="915000" />
+      <workItem from="1743564533792" duration="1711000" />
+      <workItem from="1743568966020" duration="965000" />
+      <workItem from="1743570578807" duration="1849000" />
+      <workItem from="1743593704087" duration="9002000" />
+      <workItem from="1743611214913" duration="21000" />
+      <workItem from="1743617258238" duration="334000" />
+      <workItem from="1743723493346" duration="140000" />
+      <workItem from="1743726535368" duration="16000" />
+      <workItem from="1743726574472" duration="150000" />
+      <workItem from="1743727445389" duration="9000" />
+      <workItem from="1743759411392" duration="439000" />
+      <workItem from="1743972389906" duration="454000" />
+      <workItem from="1743973287811" duration="357000" />
+      <workItem from="1744091145675" duration="108000" />
+      <workItem from="1744091844230" duration="768000" />
+      <workItem from="1744095372135" duration="1108000" />
     </task>
     <servers />
   </component>

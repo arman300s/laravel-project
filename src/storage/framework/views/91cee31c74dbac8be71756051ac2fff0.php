@@ -35,9 +35,9 @@
 
                         </div>
 
-                        <a href="<?php echo e(route('books.download', $book->id)); ?>"
-                           class="  text-black font-bold text-lg ">
-                            📥 <strong>Download PDF</strong>
+                        <a href="<?php echo e(route('user.books.download', $book->id)); ?>"
+                           class="text-blue-500 font-semibold hover:text-blue-600 transition">
+                            📥 Download PDF
                         </a>
 
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
