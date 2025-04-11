@@ -70,7 +70,7 @@
     ```
 3. Выполните следующие команды внутри контейнера:
     ```bash
-    docker exec -it app bash
+    docker exec -it php bash
     composer install
     npm install
     npm run build
