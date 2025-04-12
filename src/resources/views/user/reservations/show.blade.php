@@ -97,7 +97,7 @@
                         </dl>
 
                         {{-- Actions --}}
-                        <div class="pt-4 border-t mt-4 space-y-2">
+                        <div class="pt-4 border-t mt-4 space-y-3">
                             @if($reservation->canBeCanceled())
                                 <form action="{{ route('user.reservations.cancel', $reservation) }}" method="POST" onsubmit="return confirm('Are you sure you want to cancel this reservation?')">
                                     @csrf
@@ -110,10 +110,16 @@
                                 </form>
                             @endif
 
-                            @if($reservation->status === 'active' && $reservation->book->isAvailable())
-                                <a href="{{ route('user.borrowings.create', ['book_id' => $reservation->book_id]) }}" class="block w-full text-center px-4 py-2 border border-green-300 rounded-lg text-sm font-medium text-green-700 bg-green-100 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-150 ease-in-out">
-                                    Borrow This Book
-                                </a>
+                            @if($reservation->status === 'active')
+                                <form action="{{ route('user.reservations.create-borrowing', $reservation) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="w-full flex justify-center items-center px-4 py-2 border border-green-300 rounded-lg text-sm font-medium text-green-700 bg-green-100 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-150 ease-in-out">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6z" />
+                                        </svg>
+                                        Borrow This Book
+                                    </button>
+                                </form>
                             @endif
                         </div>
                     </div>

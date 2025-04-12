@@ -20,8 +20,8 @@ class UsersSearchController extends Controller
 
         $users = User::query()
             ->when($request->search, function($query, $search) {
-                $query->where('name', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%");
+                $query->where('name', 'like', "%$search%")
+                    ->orWhere('email', 'like', "%$search%");
             })
             ->when($request->role, function($query, $role) {
                 $query->where('role', $role);
@@ -46,7 +46,7 @@ class UsersSearchController extends Controller
         $users = User::query()
             ->where('id', '!=', auth()->id())
             ->when($request->search, function($query, $search) {
-                $query->where('name', 'like', "%{$search}%");
+                $query->where('name', 'like', "%$search%");
             })
             ->latest()
             ->paginate(10);

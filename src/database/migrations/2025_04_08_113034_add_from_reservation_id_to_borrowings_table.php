@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::table('borrowings', function (Blueprint $table) {
             $table->foreignId('from_reservation_id')
+                ->after('book_id')
                 ->nullable()
                 ->constrained('reservations')
-                ->onDelete('set null');
+                ->onDelete('set null')
+                ->comment('Link to reservation if this borrowing was created from reservation');
         });
     }
 
@@ -25,8 +27,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('borrowings', function (Blueprint $table) {
-            $table->dropForeign(['from_reservation_id']);
-            $table->dropColumn('from_reservation_id');
+            $table->dropConstrainedForeignId('from_reservation_id');
         });
     }
 };

@@ -7,13 +7,10 @@ use App\Models\Book;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Notifications\ReservationActivated;
+use App\Models\Borrowing;
 
 class ReservationController extends Controller
 {
-    /**
-     * Display a listing of reservations for users.
-     */
     public function userIndex()
     {
         $reservations = auth()->user()->reservations()
@@ -24,29 +21,17 @@ class ReservationController extends Controller
 
         return view('user.reservations.index', compact('reservations'));
     }
-
-    /**
-     * Display the specified reservation for users.
-     */
     public function userShow(Reservation $reservation)
     {
         $this->ensureUserOwnsReservation($reservation);
         $reservation->load('book');
         return view('user.reservations.show', compact('reservation'));
     }
-
-    /**
-     * Show the form for creating a new reservation (for users).
-     */
     public function userCreate()
     {
         $books = Book::where('status', '!=', Book::STATUS_UNAVAILABLE)->get();
         return view('user.reservations.create', compact('books'));
     }
-
-    /**
-     * Store a newly created reservation in storage (for users).
-     */
     public function userStore(Request $request)
     {
         $validated = $request->validate([
@@ -58,21 +43,16 @@ class ReservationController extends Controller
         return DB::transaction(function () use ($validated) {
             $book = Book::lockForUpdate()->findOrFail($validated['book_id']);
             $user = auth()->user();
-
-            // Запрещаем резервирование для специальных статусов
             if (in_array($book->status, [Book::STATUS_UNAVAILABLE, Book::STATUS_ARCHIVED, Book::STATUS_LOST])) {
                 return back()->withErrors(['book_id' => 'This book cannot be reserved.']);
             }
-
             $existingReservation = Reservation::where('user_id', $user->id)
                 ->where('book_id', $validated['book_id'])
                 ->whereIn('status', [Reservation::STATUS_PENDING, Reservation::STATUS_ACTIVE])
                 ->first();
-
             if ($existingReservation) {
                 return back()->withErrors(['book_id' => 'You already have a reservation for this book.']);
             }
-
             $reservationData = [
                 'user_id' => $user->id,
                 'book_id' => $validated['book_id'],
@@ -80,7 +60,6 @@ class ReservationController extends Controller
                 'expires_at' => $validated['expires_at'],
                 'description' => $validated['description'] ?? null,
             ];
-
             if ($book->isAvailable()) {
                 $reservationData['status'] = Reservation::STATUS_ACTIVE;
                 $book->decrement('available_copies');
@@ -92,19 +71,13 @@ class ReservationController extends Controller
             } else {
                 $reservationData['status'] = Reservation::STATUS_PENDING;
             }
-
             $reservation = Reservation::create($reservationData);
-
             return redirect()->route('user.reservations.index')
                 ->with('success', $reservation->status === Reservation::STATUS_ACTIVE
                     ? 'Book successfully reserved.'
                     : 'Your reservation has been added to the waiting list.');
         });
     }
-
-    /**
-     * Display a listing of reservations for admin.
-     */
     public function adminIndex()
     {
         $reservations = Reservation::with(['user', 'book'])
@@ -114,20 +87,12 @@ class ReservationController extends Controller
 
         return view('admin.reservations.index', compact('reservations'));
     }
-
-    /**
-     * Show the form for creating a new reservation (for admin).
-     */
     public function adminCreate()
     {
         $books = Book::all();
         $users = User::all();
         return view('admin.reservations.create', compact('books', 'users'));
     }
-
-    /**
-     * Store a newly created reservation in storage (for admin).
-     */
     public function adminStore(Request $request)
     {
         $validated = $request->validate([
@@ -137,10 +102,8 @@ class ReservationController extends Controller
             'status' => 'sometimes|in:pending,active,completed,canceled',
             'description' => 'nullable|string|max:500',
         ]);
-
         return DB::transaction(function () use ($validated) {
             $book = Book::lockForUpdate()->findOrFail($validated['book_id']);
-
             $reservationData = [
                 'user_id' => $validated['user_id'],
                 'book_id' => $validated['book_id'],
@@ -149,7 +112,6 @@ class ReservationController extends Controller
                 'description' => $validated['description'] ?? null,
                 'status' => $validated['status'] ?? 'pending',
             ];
-
             if ($reservationData['status'] === 'active') {
                 if ($book->available_copies > 0) {
                     $book->decrement('available_copies');
@@ -161,37 +123,23 @@ class ReservationController extends Controller
                     $reservationData['status'] = 'pending';
                 }
             }
-
             Reservation::create($reservationData);
 
             return redirect()->route('admin.reservations.index')
                 ->with('success', 'Reservation created successfully.');
         });
     }
-
-
-    /**
-     * Display the specified reservation for admin.
-     */
     public function adminShow(Reservation $reservation)
     {
         $reservation->load(['user', 'book']);
         return view('admin.reservations.show', compact('reservation'));
     }
-
-    /**
-     * Show the form for editing the specified reservation.
-     */
     public function adminEdit(Reservation $reservation)
     {
         $books = Book::all();
         $users = User::all();
         return view('admin.reservations.edit', compact('reservation', 'books', 'users'));
     }
-
-    /**
-     * Update the specified reservation in storage.
-     */
     public function adminUpdate(Request $request, Reservation $reservation)
     {
         $validated = $request->validate([
@@ -259,10 +207,6 @@ class ReservationController extends Controller
                 ->with('success', 'Reservation updated successfully.');
         });
     }
-
-    /**
-     * Remove the specified reservation from storage.
-     */
     public function adminDestroy(Reservation $reservation)
     {
         return DB::transaction(function () use ($reservation) {
@@ -284,49 +228,32 @@ class ReservationController extends Controller
                 ->with('success', 'Reservation deleted successfully.');
         });
     }
-
-    /**
-     * Cancel reservation (for users).
-     */
     public function userCancel(Reservation $reservation)
     {
         $this->ensureUserOwnsReservation($reservation);
 
         return DB::transaction(function () use ($reservation) {
-            // Проверяем, можно ли отменить эту резервацию
             if (!$reservation->canBeCanceled()) {
                 return back()->with('error', 'This reservation cannot be canceled.');
             }
-
             $book = $reservation->book;
             $wasActive = $reservation->isActive;
-
             $reservation->update([
                 'status' => Reservation::STATUS_CANCELED,
                 'expires_at' => now(),
-                'canceled_at' => now(), // Добавляем время отмены
+                'canceled_at' => now(),
             ]);
-
-            // Если была активной - освобождаем книгу
             if ($wasActive) {
                 $book->increment('available_copies');
-
-                // Обновляем статус книги если нужно
                 if ($book->available_copies > 0 && $book->status === Book::STATUS_RESERVED) {
                     $book->update(['status' => Book::STATUS_AVAILABLE]);
                 }
-
-                // Активируем следующую резервацию
                 $this->activateNextPendingReservation($book->id);
             }
             return redirect()->route('user.reservations.index')
                 ->with('success', 'Reservation canceled successfully.');
         });
     }
-
-    /**
-     * Cancel reservation (for admin).
-     */
     public function adminCancel(Reservation $reservation)
     {
         return DB::transaction(function () use ($reservation) {
@@ -355,9 +282,6 @@ class ReservationController extends Controller
         });
     }
 
-    /**
-     * Activate the next pending reservation when a book becomes available.
-     */
     public function activateNextPendingReservation($bookId)
     {
         $book = Book::lockForUpdate()->findOrFail($bookId);
@@ -379,63 +303,71 @@ class ReservationController extends Controller
                 if ($book->available_copies <= 0) {
                     $book->update(['status' => Book::STATUS_RESERVED]);
                 }
-
-                // Send notification to user that their reservation is now active
-                $nextReservation->user->notify(new ReservationActivated($nextReservation));
-
                 return $nextReservation;
             }
         }
-
         return null;
     }
-    /**
-     * Ensure the authenticated user owns the reservation.
-     */
     private function ensureUserOwnsReservation(Reservation $reservation)
     {
         if ($reservation->user_id !== auth()->id()) {
             abort(403, 'Unauthorized action.');
         }
     }
-
-    /**
-     * Create a borrowing from an active reservation.
-     */
-    private function createBorrowingFromReservation(Reservation $reservation)
+    public function userCreateBorrowing(Reservation $reservation)
     {
+        $this->ensureUserOwnsReservation($reservation);
+
         return DB::transaction(function () use ($reservation) {
+            if ($reservation->status !== Reservation::STATUS_ACTIVE) {
+                return back()->with('error', 'Only active reservations can be converted to borrowings.');
+            }
+
             $book = $reservation->book;
             $user = $reservation->user;
 
-            // Check if book is available
-            if ($book->available_copies <= 0) {
-                return false;
-            }
-
-            // Create the borrowing record
             $borrowing = Borrowing::create([
                 'user_id' => $user->id,
                 'book_id' => $book->id,
+                'from_reservation_id' => $reservation->id,
                 'borrowed_at' => now(),
-                'due_at' => now()->addDays(14), // Default 2 weeks borrowing period
-                'status' => 'active',
-                'description' => 'Auto-created from reservation #' . $reservation->id,
+                'due_at' => now()->addDays(14),
+                'status' => Borrowing::STATUS_ACTIVE,
+                'description' => 'Created from reservation #' . $reservation->id,
             ]);
-
-            // Update book availability
-            $book->decrement('available_copies');
-            if ($book->available_copies <= 0) {
-                $book->update(['status' => Book::STATUS_RESERVED]);
-            }
-
-            // Update reservation status
             $reservation->update([
                 'status' => Reservation::STATUS_COMPLETED,
                 'expires_at' => now()
             ]);
+            return redirect()->route('user.borrowings.index')
+                ->with('success', 'Book successfully borrowed from your reservation.');
+        });
+    }
+    public function adminCreateBorrowing(Reservation $reservation)
+    {
+        return DB::transaction(function () use ($reservation) {
+            if ($reservation->status !== Reservation::STATUS_ACTIVE) {
+                return back()->with('error', 'Only active reservations can be converted to borrowings.');
+            }
 
-            return $borrowing;
+            $book = $reservation->book;
+            $user = $reservation->user;
+
+            $borrowing = Borrowing::create([
+                'user_id' => $user->id,
+                'book_id' => $book->id,
+                'from_reservation_id' => $reservation->id,
+                'borrowed_at' => now(),
+                'due_at' => now()->addDays(14),
+                'status' => Borrowing::STATUS_ACTIVE,
+                'description' => 'Created from reservation #' . $reservation->id,
+            ]);
+            $reservation->update([
+                'status' => Reservation::STATUS_COMPLETED,
+                'expires_at' => now()
+            ]);
+            return redirect()->route('admin.borrowings.index')
+                ->with('success', 'Borrowing successfully created from reservation.');
         });
     }
 }

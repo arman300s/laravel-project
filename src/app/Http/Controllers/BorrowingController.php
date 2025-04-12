@@ -11,9 +11,6 @@ use Illuminate\Support\Facades\DB;
 
 class BorrowingController extends Controller
 {
-    /**
-     * Display a listing of borrowings for users.
-     */
     public function userIndex()
     {
         $borrowings = auth()->user()->borrowings()
@@ -25,9 +22,6 @@ class BorrowingController extends Controller
         return view('user.borrowings.index', compact('borrowings'));
     }
 
-    /**
-     * Display the specified borrowing for users.
-     */
     public function userShow(Borrowing $borrowing)
     {
         $this->ensureUserOwnsBorrowing($borrowing);
@@ -35,9 +29,6 @@ class BorrowingController extends Controller
         return view('user.borrowings.show', compact('borrowing'));
     }
 
-    /**
-     * Show the form for creating a new borrowing (for users).
-     */
     public function userCreate()
     {
         $books = Book::where('status', Book::STATUS_AVAILABLE)
@@ -46,9 +37,6 @@ class BorrowingController extends Controller
         return view('user.borrowings.create', compact('books'));
     }
 
-    /**
-     * Store a newly created borrowing in storage (for users).
-     */
     public function userStore(Request $request)
     {
         $validated = $request->validate([
@@ -74,36 +62,31 @@ class BorrowingController extends Controller
                 return back()->withErrors(['book_id' => 'You already have this book borrowed.']);
             }
 
+            $activeReservation = Reservation::where('user_id', $user->id)
+                ->where('book_id', $validated['book_id'])
+                ->where('status', Reservation::STATUS_ACTIVE)
+                ->first();
+
             $borrowingData = [
                 'user_id' => $user->id,
                 'book_id' => $validated['book_id'],
                 'borrowed_at' => now(),
                 'due_at' => $validated['due_at'],
                 'description' => $validated['description'] ?? null,
-                'status' => 'active',
+                'status' => Borrowing::STATUS_ACTIVE,
             ];
 
-            $book->decrement('available_copies');
-
-            if ($book->available_copies <= 0) {
-                $book->update(['status' => Book::STATUS_RESERVED]);
+            if ($activeReservation) {
+                $borrowingData['from_reservation_id'] = $activeReservation->id;
+                $activeReservation->update([
+                    'status' => Reservation::STATUS_COMPLETED,
+                    'expires_at' => now()
+                ]);
             }
 
-            // Check if there's an active reservation for this user and book
-            $activeReservation = Reservation::where('user_id', $user->id)
-                ->where('book_id', $validated['book_id'])
-                ->where('status', Reservation::STATUS_ACTIVE)
-                ->first();
-
-            if ($activeReservation) {
-                // Link the borrowing to the reservation
-                $borrowingData['from_reservation_id'] = $activeReservation->id;
-
-                // Optionally update reservation status to completed if you want
-                // $activeReservation->update([
-                //     'status' => Reservation::STATUS_COMPLETED,
-                //     'expires_at' => now()
-                // ]);
+            $book->decrement('available_copies');
+            if ($book->available_copies <= 0) {
+                $book->update(['status' => Book::STATUS_RESERVED]);
             }
 
             Borrowing::create($borrowingData);
@@ -112,9 +95,7 @@ class BorrowingController extends Controller
                 ->with('success', 'Book borrowed successfully.');
         });
     }
-    /**
-     * Display a listing of borrowings for admin.
-     */
+
     public function adminIndex()
     {
         $borrowings = Borrowing::with(['user', 'book'])
@@ -125,9 +106,6 @@ class BorrowingController extends Controller
         return view('admin.borrowings.index', compact('borrowings'));
     }
 
-    /**
-     * Show the form for creating a new borrowing (for admin).
-     */
     public function adminCreate()
     {
         $books = Book::where('available_copies', '>', 0)->get();
@@ -135,9 +113,6 @@ class BorrowingController extends Controller
         return view('admin.borrowings.create', compact('books', 'users'));
     }
 
-    /**
-     * Store a newly created borrowing in storage (for admin).
-     */
     public function adminStore(Request $request)
     {
         $validated = $request->validate([
@@ -158,10 +133,10 @@ class BorrowingController extends Controller
                 'borrowed_at' => now(),
                 'due_at' => $validated['due_at'],
                 'description' => $validated['description'] ?? null,
-                'status' => $validated['status'] ?? 'active',
+                'status' => $validated['status'] ?? Borrowing::STATUS_ACTIVE,
             ];
 
-            if ($borrowingData['status'] !== 'returned') {
+            if ($borrowingData['status'] !== Borrowing::STATUS_RETURNED) {
                 if ($book->available_copies <= 0) {
                     return back()->withErrors(['book_id' => 'No available copies of this book.']);
                 }
@@ -171,13 +146,13 @@ class BorrowingController extends Controller
                     $book->update(['status' => Book::STATUS_RESERVED]);
                 }
 
-                // Отменяем активную резервацию пользователя для этой книги
                 $activeReservation = Reservation::where('user_id', $user->id)
                     ->where('book_id', $validated['book_id'])
                     ->where('status', Reservation::STATUS_ACTIVE)
                     ->first();
 
                 if ($activeReservation) {
+                    $borrowingData['from_reservation_id'] = $activeReservation->id;
                     $activeReservation->update([
                         'status' => Reservation::STATUS_COMPLETED,
                         'expires_at' => now()
@@ -192,18 +167,12 @@ class BorrowingController extends Controller
         });
     }
 
-    /**
-     * Display the specified borrowing for admin.
-     */
     public function adminShow(Borrowing $borrowing)
     {
         $borrowing->load(['user', 'book']);
         return view('admin.borrowings.show', compact('borrowing'));
     }
 
-    /**
-     * Show the form for editing the specified borrowing.
-     */
     public function adminEdit(Borrowing $borrowing)
     {
         $books = Book::all();
@@ -211,42 +180,51 @@ class BorrowingController extends Controller
         return view('admin.borrowings.edit', compact('borrowing', 'books', 'users'));
     }
 
-    /**
-     * Update the specified borrowing in storage.
-     */
     public function adminUpdate(Request $request, Borrowing $borrowing)
     {
         $validated = $request->validate([
             'user_id' => 'sometimes|exists:users,id',
             'book_id' => 'sometimes|exists:books,id',
             'borrowed_at' => 'sometimes|date',
-            'returned_at' => 'sometimes|date|after:borrowed_at',
+            'returned_at' => 'nullable|date|after_or_equal:borrowed_at',
             'due_at' => 'sometimes|date|after:borrowed_at',
-            'status' => 'sometimes|in:pending,active,returned,overdue',
+            'status' => 'sometimes|in:'.implode(',', [Borrowing::STATUS_PENDING, Borrowing::STATUS_ACTIVE, Borrowing::STATUS_RETURNED, Borrowing::STATUS_OVERDUE]),
             'description' => 'nullable|string|max:500',
         ]);
 
-        return DB::transaction(function () use ($validated, $borrowing) {
+        return DB::transaction(function () use ($validated, $borrowing, $request) {
             $originalStatus = $borrowing->status;
             $newStatus = $validated['status'] ?? $originalStatus;
-            $bookChanged = isset($validated['book_id']) && ($validated['book_id'] != $borrowing->book_id);
+            $originalBookId = $borrowing->book_id;
+            $newBookId = $validated['book_id'] ?? $originalBookId;
+            $bookChanged = $newBookId != $originalBookId;
+
+            $oldBook = null;
+            if ($originalStatus !== Borrowing::STATUS_RETURNED || $bookChanged) {
+                $oldBook = Book::lockForUpdate()->find($originalBookId);
+            }
 
             if ($bookChanged) {
-                $newBook = Book::lockForUpdate()->findOrFail($validated['book_id']);
-                $oldBook = $borrowing->book;
+                $newBook = Book::lockForUpdate()->findOrFail($newBookId);
 
-                if ($originalStatus !== 'returned') {
+                if ($originalStatus !== Borrowing::STATUS_RETURNED && $oldBook) {
                     $oldBook->increment('available_copies');
-                    if ($oldBook->available_copies > 0) {
+                    if ($oldBook->available_copies > 0 && $oldBook->status !== Book::STATUS_AVAILABLE) {
                         $oldBook->update(['status' => Book::STATUS_AVAILABLE]);
+                    } else {
+                        $oldBook->save();
                     }
+                    $reservationController = new ReservationController();
+                    $reservationController->activateNextPendingReservation($oldBook->id);
                 }
 
-                if ($newStatus !== 'returned') {
+                if ($newStatus !== Borrowing::STATUS_RETURNED) {
                     if ($newBook->available_copies > 0) {
                         $newBook->decrement('available_copies');
-                        if ($newBook->available_copies <= 0) {
+                        if ($newBook->available_copies <= 0 && $newBook->status !== Book::STATUS_RESERVED) {
                             $newBook->update(['status' => Book::STATUS_RESERVED]);
+                        } else {
+                            $newBook->save();
                         }
                     } else {
                         return back()->withErrors(['book_id' => 'No available copies of the new book.']);
@@ -254,28 +232,40 @@ class BorrowingController extends Controller
                 }
             } else {
                 if ($originalStatus !== $newStatus) {
-                    $book = $borrowing->book;
+                    $book = $oldBook ?? $borrowing->book()->lockForUpdate()->first();
 
-                    if ($originalStatus !== 'returned' && $newStatus === 'returned') {
+                    if ($originalStatus !== Borrowing::STATUS_RETURNED && $newStatus === Borrowing::STATUS_RETURNED) {
                         $book->increment('available_copies');
-                        if ($book->available_copies > 0) {
+                        if ($book->available_copies > 0 && $book->status !== Book::STATUS_AVAILABLE) {
                             $book->update(['status' => Book::STATUS_AVAILABLE]);
+                        } else {
+                            $book->save();
                         }
-
-                        // Активируем следующую резервацию при возврате книги
                         $reservationController = new ReservationController();
                         $reservationController->activateNextPendingReservation($book->id);
-                    } elseif ($originalStatus === 'returned' && $newStatus !== 'returned') {
+                    } elseif ($originalStatus === Borrowing::STATUS_RETURNED && $newStatus !== Borrowing::STATUS_RETURNED) {
                         if ($book->available_copies > 0) {
                             $book->decrement('available_copies');
-                            if ($book->available_copies <= 0) {
+                            if ($book->available_copies <= 0 && $book->status !== Book::STATUS_RESERVED) {
                                 $book->update(['status' => Book::STATUS_RESERVED]);
+                            } else {
+                                $book->save();
                             }
                         } else {
                             return back()->withErrors(['status' => 'No available copies to mark as not returned.']);
                         }
                     }
                 }
+            }
+
+            if ($newStatus === Borrowing::STATUS_RETURNED && empty($validated['returned_at'])) {
+                $validated['returned_at'] = now();
+            } elseif ($newStatus !== Borrowing::STATUS_RETURNED && $request->has('returned_at')) {
+                if (empty($validated['returned_at'])) {
+                    $validated['returned_at'] = null;
+                }
+            } elseif ($newStatus !== Borrowing::STATUS_RETURNED) {
+                $validated['returned_at'] = null;
             }
 
             $borrowing->update($validated);
@@ -285,55 +275,59 @@ class BorrowingController extends Controller
         });
     }
 
-    /**
-     * Remove the specified borrowing from storage.
-     */
     public function adminDestroy(Borrowing $borrowing)
     {
         return DB::transaction(function () use ($borrowing) {
-            if (in_array($borrowing->status, ['active', 'overdue'])) {
-                return back()->with('error', 'Cannot delete active or overdue borrowings.');
-            }
+            $book = $borrowing->book()->lockForUpdate()->first();
+            $originalStatus = $borrowing->status;
 
-            if ($borrowing->status !== 'returned') {
-                $borrowing->book->increment('available_copies');
-                if ($borrowing->book->available_copies > 0) {
-                    $borrowing->book->update(['status' => Book::STATUS_AVAILABLE]);
-                }
+            if (in_array($originalStatus, [Borrowing::STATUS_ACTIVE, Borrowing::STATUS_OVERDUE])) {
+                return back()->with('error', 'Cannot delete active or overdue borrowings. Please mark as returned first.');
             }
-
             $borrowing->delete();
+
+            if ($originalStatus !== Borrowing::STATUS_RETURNED && $book) {
+                $book->increment('available_copies');
+                if ($book->available_copies > 0 && $book->status !== Book::STATUS_AVAILABLE) {
+                    $book->update(['status' => Book::STATUS_AVAILABLE]);
+                } else {
+                    $book->save();
+                }
+                $reservationController = new ReservationController();
+                $reservationController->activateNextPendingReservation($book->id);
+            }
 
             return redirect()->route('admin.borrowings.index')
                 ->with('success', 'Borrowing deleted successfully.');
         });
     }
-
-    /**
-     * Mark borrowing as returned (for users).
-     */
     public function userReturn(Borrowing $borrowing)
     {
         $this->ensureUserOwnsBorrowing($borrowing);
 
         return DB::transaction(function () use ($borrowing) {
-            if ($borrowing->status === 'returned') {
+            if ($borrowing->status === Borrowing::STATUS_RETURNED) {
                 return back()->with('warning', 'Book already returned.');
             }
 
-            $borrowing->update([
-                'returned_at' => now(),
-                'status' => 'returned'
-            ]);
-
-            $book = $borrowing->book;
-            $book->increment('available_copies');
-
-            if ($book->available_copies > 0) {
-                $book->update(['status' => Book::STATUS_AVAILABLE]);
+            if (!in_array($borrowing->status, [Borrowing::STATUS_ACTIVE, Borrowing::STATUS_OVERDUE])) {
+                return back()->with('error', 'Only active or overdue borrowings can be returned.');
             }
 
-            // Активируем следующую резервацию при возврате книги
+            $book = $borrowing->book()->lockForUpdate()->firstOrFail();
+
+            $borrowing->update([
+                'returned_at' => now(),
+                'status' => Borrowing::STATUS_RETURNED
+            ]);
+
+            $book->increment('available_copies');
+
+            if ($book->available_copies > 0 && $book->status !== Book::STATUS_AVAILABLE) {
+                $book->update(['status' => Book::STATUS_AVAILABLE]);
+            } else {
+                $book->save();
+            }
             $reservationController = new ReservationController();
             $reservationController->activateNextPendingReservation($book->id);
 
@@ -342,29 +336,27 @@ class BorrowingController extends Controller
         });
     }
 
-    /**
-     * Mark borrowing as returned (for admin).
-     */
     public function adminReturn(Borrowing $borrowing)
     {
         return DB::transaction(function () use ($borrowing) {
-            if ($borrowing->status === 'returned') {
+            if ($borrowing->status === Borrowing::STATUS_RETURNED) {
                 return back()->with('warning', 'Book already returned.');
             }
-
+            if (!in_array($borrowing->status, [Borrowing::STATUS_ACTIVE, Borrowing::STATUS_OVERDUE])) {
+                return back()->with('error', 'Only active or overdue borrowings can be returned.');
+            }
+            $book = $borrowing->book()->lockForUpdate()->firstOrFail();
             $borrowing->update([
                 'returned_at' => now(),
-                'status' => 'returned'
+                'status' => Borrowing::STATUS_RETURNED
             ]);
-
-            $book = $borrowing->book;
             $book->increment('available_copies');
 
-            if ($book->available_copies > 0) {
+            if ($book->available_copies > 0 && $book->status !== Book::STATUS_AVAILABLE) {
                 $book->update(['status' => Book::STATUS_AVAILABLE]);
+            } else {
+                $book->save();
             }
-
-            // Активируем следующую резервацию при возврате книги
             $reservationController = new ReservationController();
             $reservationController->activateNextPendingReservation($book->id);
 
@@ -372,10 +364,6 @@ class BorrowingController extends Controller
                 ->with('success', 'Book returned successfully.');
         });
     }
-
-    /**
-     * Ensure the authenticated user owns the borrowing.
-     */
     private function ensureUserOwnsBorrowing(Borrowing $borrowing)
     {
         if ($borrowing->user_id !== auth()->id()) {

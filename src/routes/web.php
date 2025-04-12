@@ -43,17 +43,18 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'verified', 'user'])->
         Route::get('/create', 'userCreate')->name('create');
         Route::post('/', 'userStore')->name('store');
         Route::get('/{borrowing}', 'userShow')->name('show');
-        Route::post('/{borrowing}/return', 'userReturn')->name('return'); // Note: Might consider PATCH/PUT
+        Route::post('/{borrowing}/return', 'userReturn')->name('return');
     });
 
-    // Reservation Routes <-- Added Section
+    // Reservation Routes
     Route::prefix('reservations')->name('reservations.')->controller(ReservationController::class)->group(function () {
         Route::get('/', 'userIndex')->name('index');
         Route::get('/create', 'userCreate')->name('create');
         Route::post('/', 'userStore')->name('store');
         Route::get('/{reservation}', 'userShow')->name('show');
         Route::post('/{reservation}/cancel', 'userCancel')->name('cancel');
-        Route::post('/admin/reservations/{reservation}/convert-to-borrowing', [ReservationController::class, 'convertToBorrowing'])->name('admin.reservations.convert_to_borrowing');// Note: Might consider PATCH/PUT
+        Route::post('{reservation}/create-borrowing', [ReservationController::class, 'userCreateBorrowing'])
+            ->name('create-borrowing');
     });
 
     Route::get('/users/search', [UsersSearchController::class, 'userIndex'])->name('users.search');
@@ -104,7 +105,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'admin']
         Route::get('/{reservation}/edit', 'adminEdit')->name('edit');
         Route::put('/{reservation}', 'adminUpdate')->name('update');
         Route::delete('/{reservation}', 'adminDestroy')->name('destroy');
-        Route::post('/{reservation}/cancel', 'adminCancel')->name('cancel'); // Note: Might consider PATCH/PUT
+        Route::post('/{reservation}/cancel', 'adminCancel')->name('cancel');
+        Route::post('{reservation}/create-borrowing', [ReservationController::class, 'adminCreateBorrowing'])
+            ->name('create-borrowing');
     });
 
     // Category Management
