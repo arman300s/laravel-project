@@ -5,16 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9f4eb7bd-5a9c-4a9f-8477-a5d2904c1dcb" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/bf9e0f7e-c59e-41c6-bc84-b9c9dedf2b79.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/bf9e0f7e-c59e-41c6-bc84-b9c9dedf2b79.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Http/Controllers/BorrowingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Http/Controllers/BorrowingController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Http/Controllers/ReservationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Http/Controllers/ReservationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Http/Controllers/UsersSearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Http/Controllers/UsersSearchController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/migrations/2025_04_08_113034_add_from_reservation_id_to_borrowings_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/migrations/2025_04_08_113034_add_from_reservation_id_to_borrowings_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/views/admin/reservations/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/views/admin/reservations/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/views/user/reservations/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/views/user/reservations/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Models/Book.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Models/Book.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Models/Borrowing.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Models/Borrowing.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -289,7 +282,7 @@
       <workItem from="1744168180036" duration="2753000" />
       <workItem from="1744173313649" duration="1190000" />
       <workItem from="1744377217263" duration="1627000" />
-      <workItem from="1744470557618" duration="8110000" />
+      <workItem from="1744470557618" duration="8905000" />
     </task>
     <servers />
   </component>

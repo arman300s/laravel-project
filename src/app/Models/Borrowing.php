@@ -35,7 +35,6 @@ class Borrowing extends Model
     protected static function booted()
     {
         static::saving(function ($model) {
-            // Проверка доступных копий книги
             if (isset($model->book)) {
                 if ($model->book->available_copies > $model->book->total_copies) {
                     $model->book->available_copies = $model->book->total_copies;
@@ -45,12 +44,9 @@ class Borrowing extends Model
                 }
             }
 
-            // Автоматическая установка borrowed_at при создании
             if ($model->isDirty() && !$model->exists && empty($model->borrowed_at)) {
                 $model->borrowed_at = now();
             }
-
-            // Автоматическая проверка просрочки
             $model->checkAndUpdateOverdueStatus();
         });
 
@@ -61,7 +57,6 @@ class Borrowing extends Model
         });
 
         static::updating(function ($model) {
-            // Автоматическая установка returned_at при изменении статуса на "returned"
             if ($model->isDirty('status') &&
                 $model->status === self::STATUS_RETURNED &&
                 empty($model->returned_at)) {
@@ -70,14 +65,9 @@ class Borrowing extends Model
         });
 
         static::retrieved(function ($model) {
-            // Проверка просрочки при загрузке модели
             $model->checkAndUpdateOverdueStatus();
         });
     }
-
-    /**
-     * Проверяет и обновляет статус просрочки
-     */
     public function checkAndUpdateOverdueStatus(): bool
     {
         if ($this->status === self::STATUS_ACTIVE &&
@@ -85,23 +75,15 @@ class Borrowing extends Model
             is_null($this->returned_at)) {
 
             $this->status = self::STATUS_OVERDUE;
-            $this->saveQuietly(); // Сохраняем без повторного вызова событий
+            $this->saveQuietly();
             return true;
         }
         return false;
     }
-
-    /**
-     * Отношение к книге
-     */
     public function book(): BelongsTo
     {
         return $this->belongsTo(Book::class);
     }
-
-    /**
-     * Отношение к пользователю
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -111,9 +93,6 @@ class Borrowing extends Model
         return $this->belongsTo(Reservation::class, 'from_reservation_id');
     }
 
-    /**
-     * Возвращает читабельное название статуса
-     */
     public function getStatusLabelAttribute(): string
     {
         return match($this->status) {
@@ -124,10 +103,6 @@ class Borrowing extends Model
             default => 'Unknown',
         };
     }
-
-    /**
-     * Проверяет, просрочен ли займ
-     */
     public function isOverdue(): bool
     {
         return $this->status === self::STATUS_OVERDUE ||

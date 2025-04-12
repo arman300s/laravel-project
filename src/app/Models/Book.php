@@ -8,15 +8,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Book extends Model
 {
     use HasFactory;
-
-    // Статусы книг
     public const STATUS_AVAILABLE = 'available';
     public const STATUS_RESERVED = 'reserved';
     public const STATUS_UNAVAILABLE = 'unavailable';
     public const STATUS_ARCHIVED = 'archived';
     public const STATUS_LOST = 'lost';
 
-    // Цвета статусов для UI
     public const STATUS_COLORS = [
         self::STATUS_AVAILABLE => 'bg-green-100 text-green-800',
         self::STATUS_RESERVED => 'bg-blue-100 text-blue-800',
@@ -43,10 +40,8 @@ class Book extends Model
     protected static function booted()
     {
         static::saving(function ($book) {
-            // Валидация количества копий
             $book->available_copies = max(0, min($book->available_copies, $book->total_copies));
 
-            // Автоматическое обновление статуса только для обычных статусов
             if ($book->status !== self::STATUS_ARCHIVED &&
                 $book->status !== self::STATUS_LOST &&
                 $book->status !== self::STATUS_UNAVAILABLE) {
@@ -58,7 +53,6 @@ class Book extends Model
         });
 
         static::updated(function ($book) {
-            // Если книга стала доступной, активируем ожидающие резервации
             if ($book->wasChanged('available_copies') && $book->available_copies > 0) {
                 $book->activatePendingReservations();
             }
@@ -104,8 +98,6 @@ class Book extends Model
         }
         return $formats;
     }
-
-    // Методы для работы со статусами
     public function getStatusLabelAttribute(): string
     {
         return match($this->status) {
