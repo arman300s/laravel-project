@@ -10,10 +10,17 @@ class AuthorController extends Controller
     /**
      * Display a listing of authors for users.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $authors = Author::paginate(10);
-        return view('user.authors.index', compact('authors'));
+        $search = $request->input('search');
+
+        $authors = Author::when($search, function($query, $search) {
+            return $query->where('first_name', 'like', "%{$search}%")
+                ->orWhere('last_name', 'like', "%{$search}%")
+                ->orWhere('bio', 'like', "%{$search}%");
+        })->paginate(10);
+
+        return view('user.authors.index', compact('authors', 'search'));
     }
 
     /**
@@ -27,10 +34,17 @@ class AuthorController extends Controller
     /**
      * Display a listing of authors for admin.
      */
-    public function adminIndex()
+    public function adminIndex(Request $request)
     {
-        $authors = Author::paginate(10);
-        return view('admin.authors.index', compact('authors'));
+        $search = $request->input('search');
+
+        $authors = Author::when($search, function($query, $search) {
+            return $query->where('first_name', 'like', "%{$search}%")
+                ->orWhere('last_name', 'like', "%{$search}%")
+                ->orWhere('bio', 'like', "%{$search}%");
+        })->paginate(10);
+
+        return view('admin.authors.index', compact('authors', 'search'));
     }
 
     /**

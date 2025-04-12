@@ -12,6 +12,28 @@
         </div>
     @endif
 
+    <div class="bg-white rounded-lg shadow overflow-hidden mb-6">
+        <div class="p-4 sm:p-6">
+            <form method="GET" action="{{ route('admin.authors.index') }}">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="flex-1">
+                        <input type="text" name="search" value="{{ request('search') }}"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition"
+                               placeholder="Search by name or bio...">
+                    </div>
+                    <button type="submit" class="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700 transition duration-200">
+                        Search
+                    </button>
+                    @if(request()->has('search') && request('search') !== '')
+                        <a href="{{ route('admin.authors.index') }}" class="px-4 py-2 text-center border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200">
+                            Clear
+                        </a>
+                    @endif
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="bg-white rounded-lg shadow overflow-hidden">
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
@@ -61,7 +83,7 @@
             </table>
         </div>
         <div class="px-6 py-4 bg-gray-50 border-t border-gray-200">
-            {{ $authors->links() }}
+            {{ $authors->appends(request()->query())->links() }}
         </div>
     </div>
 </x-author-layout>
