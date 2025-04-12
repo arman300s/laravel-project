@@ -210,8 +210,8 @@ class ReservationController extends Controller
     public function adminDestroy(Reservation $reservation)
     {
         return DB::transaction(function () use ($reservation) {
-            if (in_array($reservation->status, ['active', 'completed'])) {
-                return back()->with('error', 'Cannot delete active or completed reservations.');
+            if (in_array($reservation->status, ['active'])) {
+                return back()->with('error', 'Cannot delete active reservations.');
             }
 
             if ($reservation->status === 'active') {
