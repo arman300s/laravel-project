@@ -1,7 +1,7 @@
-<x-borrowing-layout> {{-- Using borrowing layout for consistent style --}}
+<x-reservation-layout>
     <div class="flex justify-between items-center mb-6">
         <h3 class="text-2xl font-bold text-gray-800">My Reservations</h3>
-        <a href="{{ route('user.reservations.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out">
+        <a href="{{ route('user.reservations.create') }}" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-200">
             New Reservation
         </a>
     </div>
@@ -40,7 +40,6 @@
         </div>
     </div>
 
-    {{-- Reservations Table --}}
     <div class="bg-white rounded-lg shadow overflow-hidden">
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
@@ -109,4 +108,4 @@
             </div>
         @endif
     </div>
-</x-borrowing-layout>
+</x-reservation-layout>

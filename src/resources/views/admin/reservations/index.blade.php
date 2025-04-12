@@ -1,7 +1,7 @@
 <x-reservation-layout>
     <div class="flex justify-between items-center mb-6">
         <h3 class="text-2xl font-bold text-gray-800">Reservation Management</h3>
-        <a href="{{ route('admin.reservations.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out">
+        <a href="{{ route('admin.reservations.create') }}" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-200">
             New Reservation
         </a>
     </div>
@@ -22,7 +22,6 @@
         </div>
     @endif
 
-    {{-- Search Form --}}
     <div class="bg-white rounded-lg shadow overflow-hidden mb-6">
         <div class="p-4 sm:p-6">
             <form method="GET" action="{{ route('admin.reservations.index') }}">
@@ -45,7 +44,6 @@
         </div>
     </div>
 
-    {{-- Reservations Table --}}
     <div class="bg-white rounded-lg shadow overflow-hidden">
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
@@ -68,7 +66,6 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm font-medium text-gray-900">{{ $reservation->book->title }}</div>
-                            {{-- Assuming Author relationship exists and has getFullNameAttribute --}}
                             <div class="text-xs text-gray-500">by {{ $reservation->book->author ? $reservation->book->author->getFullNameAttribute() : 'N/A' }}</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -83,29 +80,24 @@
                                 'bg-yellow-100 text-yellow-800' => $reservation->status === 'pending',
                                 'bg-green-100 text-green-800' => $reservation->status === 'completed',
                                 'bg-red-100 text-red-800' => $reservation->status === 'canceled',
-                                'bg-gray-100 text-gray-800' => !in_array($reservation->status, ['pending', 'completed', 'canceled']), // Fallback
+                                'bg-gray-100 text-gray-800' => !in_array($reservation->status, ['pending', 'completed', 'canceled']),
                             ])>
                                 {{ ucfirst($reservation->status) }}
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <div class="flex items-center space-x-3">
-                                {{-- View --}}
                                 <a href="{{ route('admin.reservations.show', $reservation) }}" class="text-blue-600 hover:text-blue-900" title="View">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z" /><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" /></svg>
                                 </a>
-                                {{-- Edit --}}
                                 <a href="{{ route('admin.reservations.edit', $reservation) }}" class="text-indigo-600 hover:text-indigo-900" title="Edit">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" /></svg>
                                 </a>
 
-                                {{-- Cancel --}}
                                 @if($reservation->status !== 'canceled' && $reservation->status !== 'completed')
                                     <form action="{{ route('admin.reservations.cancel', $reservation) }}" method="POST" onsubmit="return confirm('Are you sure you want to cancel this reservation?')">
                                         @csrf
-                                        {{-- Typically cancel would be PATCH/PUT, but can use POST --}}
                                         <button type="submit" class="text-orange-600 hover:text-orange-900" title="Cancel Reservation">
-                                            {{-- Ban Icon --}}
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
                                             </svg>
@@ -113,8 +105,6 @@
                                     </form>
                                 @endif
 
-                                {{-- Delete --}}
-                                {{-- Controller logic prevents deletion if pending/completed, but show button for consistency --}}
                                 <form action="{{ route('admin.reservations.destroy', $reservation) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this reservation record? This cannot be undone.')">
                                     @csrf
                                     @method('DELETE')
@@ -133,7 +123,6 @@
                 </tbody>
             </table>
         </div>
-        {{-- Pagination --}}
         @if ($reservations->hasPages())
             <div class="px-6 py-4 bg-gray-50 border-t border-gray-200">
                 {{ $reservations->appends(request()->query())->links() }}
