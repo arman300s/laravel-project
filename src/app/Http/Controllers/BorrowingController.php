@@ -13,14 +13,33 @@ class BorrowingController extends Controller
 {
     public function userIndex()
     {
+        $search = request('search');
+
         $borrowings = auth()->user()->borrowings()
-            ->with('book')
-            ->orderBy('status')
+            ->with(['book', 'book.author', 'book.category'])
+            ->when($search, function($query) use ($search) {
+                $query->where(function($q) use ($search) {
+                    $q->whereHas('book', function($q) use ($search) {
+                        $q->where('title', 'like', "%{$search}%")
+                            ->orWhere('isbn', 'like', "%{$search}%")
+                            ->orWhereHas('author', function($q) use ($search) {
+                                $q->where('first_name', 'like', "%{$search}%")
+                                    ->orWhere('last_name', 'like', "%{$search}%");
+                            })
+                            ->orWhereHas('category', function($q) use ($search) {
+                                $q->where('name', 'like', "%{$search}%");
+                            });
+                    })
+                        ->orWhere('status', 'like', "%{$search}%")
+                        ->orWhere('description', 'like', "%{$search}%");
+                });
+            })
             ->orderBy('borrowed_at', 'desc')
             ->paginate(10);
 
         return view('user.borrowings.index', compact('borrowings'));
     }
+
 
     public function userShow(Borrowing $borrowing)
     {

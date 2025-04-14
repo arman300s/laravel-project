@@ -15,9 +15,28 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::with(['author', 'category'])->paginate(10);
+        $search = request('search');
+
+        $books = Book::with(['author', 'category'])
+            ->when($search, function($query) use ($search) {
+                $query->where(function($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%")
+                        ->orWhere('isbn', 'like', "%{$search}%")
+                        ->orWhere('description', 'like', "%{$search}%")
+                        ->orWhereHas('author', function($q) use ($search) {
+                            $q->where('first_name', 'like', "%{$search}%")
+                                ->orWhere('last_name', 'like', "%{$search}%");
+                        })
+                        ->orWhereHas('category', function($q) use ($search) {
+                            $q->where('name', 'like', "%{$search}%");
+                        });
+                });
+            })
+            ->paginate(10);
+
         return view('user.books.index', compact('books'));
     }
+
 
     /**
      * Display the specified book for users.
@@ -33,7 +52,25 @@ class BookController extends Controller
      */
     public function adminIndex()
     {
-        $books = Book::with(['author', 'category'])->paginate(10);
+        $search = request('search');
+
+        $books = Book::with(['author', 'category'])
+            ->when($search, function($query) use ($search) {
+                $query->where(function($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%")
+                        ->orWhere('isbn', 'like', "%{$search}%")
+                        ->orWhere('description', 'like', "%{$search}%")
+                        ->orWhereHas('author', function($q) use ($search) {
+                            $q->where('first_name', 'like', "%{$search}%")
+                                ->orWhere('last_name', 'like', "%{$search}%");
+                        })
+                        ->orWhereHas('category', function($q) use ($search) {
+                            $q->where('name', 'like', "%{$search}%");
+                        });
+                });
+            })
+            ->paginate(10);
+
         return view('admin.books.index', compact('books'));
     }
 

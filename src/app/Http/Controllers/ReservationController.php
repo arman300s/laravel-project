@@ -11,27 +11,49 @@ use App\Models\Borrowing;
 
 class ReservationController extends Controller
 {
-    public function userIndex()
+    /**
+     * Display a listing of reservations for users.
+     */
+    public function userIndex(Request $request)
     {
+        $search = $request->input('search');
+
         $reservations = auth()->user()->reservations()
             ->with('book')
-            ->orderBy('status')
+            ->when($search, function($query, $search) {
+                return $query->whereHas('book', function($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%");
+                })
+                    ->orWhere('status', 'like', "%{$search}%");
+            })
             ->orderBy('reserved_at', 'desc')
             ->paginate(10);
 
-        return view('user.reservations.index', compact('reservations'));
+        return view('user.reservations.index', compact('reservations', 'search'));
     }
+
+    /**
+     * Display the specified reservation for users.
+     */
     public function userShow(Reservation $reservation)
     {
         $this->ensureUserOwnsReservation($reservation);
         $reservation->load('book');
         return view('user.reservations.show', compact('reservation'));
     }
+
+    /**
+     * Show the form for creating a new reservation for users.
+     */
     public function userCreate()
     {
         $books = Book::where('status', '!=', Book::STATUS_UNAVAILABLE)->get();
         return view('user.reservations.create', compact('books'));
     }
+
+    /**
+     * Store a newly created reservation for users.
+     */
     public function userStore(Request $request)
     {
         $validated = $request->validate([
@@ -43,16 +65,20 @@ class ReservationController extends Controller
         return DB::transaction(function () use ($validated) {
             $book = Book::lockForUpdate()->findOrFail($validated['book_id']);
             $user = auth()->user();
+
             if (in_array($book->status, [Book::STATUS_UNAVAILABLE, Book::STATUS_ARCHIVED, Book::STATUS_LOST])) {
                 return back()->withErrors(['book_id' => 'This book cannot be reserved.']);
             }
+
             $existingReservation = Reservation::where('user_id', $user->id)
                 ->where('book_id', $validated['book_id'])
                 ->whereIn('status', [Reservation::STATUS_PENDING, Reservation::STATUS_ACTIVE])
                 ->first();
+
             if ($existingReservation) {
                 return back()->withErrors(['book_id' => 'You already have a reservation for this book.']);
             }
+
             $reservationData = [
                 'user_id' => $user->id,
                 'book_id' => $validated['book_id'],
@@ -60,6 +86,7 @@ class ReservationController extends Controller
                 'expires_at' => $validated['expires_at'],
                 'description' => $validated['description'] ?? null,
             ];
+
             if ($book->isAvailable()) {
                 $reservationData['status'] = Reservation::STATUS_ACTIVE;
                 $book->decrement('available_copies');
@@ -71,28 +98,52 @@ class ReservationController extends Controller
             } else {
                 $reservationData['status'] = Reservation::STATUS_PENDING;
             }
+
             $reservation = Reservation::create($reservationData);
+
             return redirect()->route('user.reservations.index')
                 ->with('success', $reservation->status === Reservation::STATUS_ACTIVE
                     ? 'Book successfully reserved.'
                     : 'Your reservation has been added to the waiting list.');
         });
     }
-    public function adminIndex()
+
+    /**
+     * Display a listing of reservations for admin.
+     */
+    public function adminIndex(Request $request)
     {
+        $search = $request->input('search');
+
         $reservations = Reservation::with(['user', 'book'])
-            ->orderBy('status')
+            ->when($search, function($query, $search) {
+                return $query->whereHas('book', function($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%");
+                })
+                    ->orWhereHas('user', function($q) use ($search) {
+                        $q->where('name', 'like', "%{$search}%");
+                    })
+                    ->orWhere('status', 'like', "%{$search}%");
+            })
             ->orderBy('reserved_at', 'desc')
             ->paginate(10);
 
-        return view('admin.reservations.index', compact('reservations'));
+        return view('admin.reservations.index', compact('reservations', 'search'));
     }
+
+    /**
+     * Show the form for creating a new reservation for admin.
+     */
     public function adminCreate()
     {
         $books = Book::all();
         $users = User::all();
         return view('admin.reservations.create', compact('books', 'users'));
     }
+
+    /**
+     * Store a newly created reservation for admin.
+     */
     public function adminStore(Request $request)
     {
         $validated = $request->validate([
@@ -102,8 +153,10 @@ class ReservationController extends Controller
             'status' => 'sometimes|in:pending,active,completed,canceled',
             'description' => 'nullable|string|max:500',
         ]);
+
         return DB::transaction(function () use ($validated) {
             $book = Book::lockForUpdate()->findOrFail($validated['book_id']);
+
             $reservationData = [
                 'user_id' => $validated['user_id'],
                 'book_id' => $validated['book_id'],
@@ -112,6 +165,7 @@ class ReservationController extends Controller
                 'description' => $validated['description'] ?? null,
                 'status' => $validated['status'] ?? 'pending',
             ];
+
             if ($reservationData['status'] === 'active') {
                 if ($book->available_copies > 0) {
                     $book->decrement('available_copies');
@@ -123,23 +177,36 @@ class ReservationController extends Controller
                     $reservationData['status'] = 'pending';
                 }
             }
+
             Reservation::create($reservationData);
 
             return redirect()->route('admin.reservations.index')
                 ->with('success', 'Reservation created successfully.');
         });
     }
+
+    /**
+     * Display the specified reservation for admin.
+     */
     public function adminShow(Reservation $reservation)
     {
         $reservation->load(['user', 'book']);
         return view('admin.reservations.show', compact('reservation'));
     }
+
+    /**
+     * Show the form for editing the specified reservation.
+     */
     public function adminEdit(Reservation $reservation)
     {
         $books = Book::all();
         $users = User::all();
         return view('admin.reservations.edit', compact('reservation', 'books', 'users'));
     }
+
+    /**
+     * Update the specified reservation for admin.
+     */
     public function adminUpdate(Request $request, Reservation $reservation)
     {
         $validated = $request->validate([
@@ -207,6 +274,10 @@ class ReservationController extends Controller
                 ->with('success', 'Reservation updated successfully.');
         });
     }
+
+    /**
+     * Remove the specified reservation for admin.
+     */
     public function adminDestroy(Reservation $reservation)
     {
         return DB::transaction(function () use ($reservation) {
@@ -228,6 +299,10 @@ class ReservationController extends Controller
                 ->with('success', 'Reservation deleted successfully.');
         });
     }
+
+    /**
+     * Cancel reservation for users.
+     */
     public function userCancel(Reservation $reservation)
     {
         $this->ensureUserOwnsReservation($reservation);
@@ -236,13 +311,16 @@ class ReservationController extends Controller
             if (!$reservation->canBeCanceled()) {
                 return back()->with('error', 'This reservation cannot be canceled.');
             }
+
             $book = $reservation->book;
             $wasActive = $reservation->isActive;
+
             $reservation->update([
                 'status' => Reservation::STATUS_CANCELED,
                 'expires_at' => now(),
                 'canceled_at' => now(),
             ]);
+
             if ($wasActive) {
                 $book->increment('available_copies');
                 if ($book->available_copies > 0 && $book->status === Book::STATUS_RESERVED) {
@@ -250,10 +328,15 @@ class ReservationController extends Controller
                 }
                 $this->activateNextPendingReservation($book->id);
             }
+
             return redirect()->route('user.reservations.index')
                 ->with('success', 'Reservation canceled successfully.');
         });
     }
+
+    /**
+     * Cancel reservation for admin.
+     */
     public function adminCancel(Reservation $reservation)
     {
         return DB::transaction(function () use ($reservation) {
@@ -282,38 +365,9 @@ class ReservationController extends Controller
         });
     }
 
-    public function activateNextPendingReservation($bookId)
-    {
-        $book = Book::lockForUpdate()->findOrFail($bookId);
-
-        if ($book->available_copies > 0) {
-            $nextReservation = Reservation::where('book_id', $bookId)
-                ->where('status', Reservation::STATUS_PENDING)
-                ->orderBy('reserved_at')
-                ->first();
-
-            if ($nextReservation) {
-                $nextReservation->update([
-                    'status' => Reservation::STATUS_ACTIVE,
-                    'expires_at' => now()->addDays(14)
-                ]);
-
-                $book->decrement('available_copies');
-
-                if ($book->available_copies <= 0) {
-                    $book->update(['status' => Book::STATUS_RESERVED]);
-                }
-                return $nextReservation;
-            }
-        }
-        return null;
-    }
-    private function ensureUserOwnsReservation(Reservation $reservation)
-    {
-        if ($reservation->user_id !== auth()->id()) {
-            abort(403, 'Unauthorized action.');
-        }
-    }
+    /**
+     * Create borrowing from reservation for users.
+     */
     public function userCreateBorrowing(Reservation $reservation)
     {
         $this->ensureUserOwnsReservation($reservation);
@@ -335,14 +389,20 @@ class ReservationController extends Controller
                 'status' => Borrowing::STATUS_ACTIVE,
                 'description' => 'Created from reservation #' . $reservation->id,
             ]);
+
             $reservation->update([
                 'status' => Reservation::STATUS_COMPLETED,
                 'expires_at' => now()
             ]);
+
             return redirect()->route('user.borrowings.index')
                 ->with('success', 'Book successfully borrowed from your reservation.');
         });
     }
+
+    /**
+     * Create borrowing from reservation for admin.
+     */
     public function adminCreateBorrowing(Reservation $reservation)
     {
         return DB::transaction(function () use ($reservation) {
@@ -362,12 +422,56 @@ class ReservationController extends Controller
                 'status' => Borrowing::STATUS_ACTIVE,
                 'description' => 'Created from reservation #' . $reservation->id,
             ]);
+
             $reservation->update([
                 'status' => Reservation::STATUS_COMPLETED,
                 'expires_at' => now()
             ]);
+
             return redirect()->route('admin.borrowings.index')
                 ->with('success', 'Borrowing successfully created from reservation.');
         });
+    }
+
+    /**
+     * Activate next pending reservation for a book.
+     */
+    public function activateNextPendingReservation($bookId)
+    {
+        $book = Book::lockForUpdate()->findOrFail($bookId);
+
+        if ($book->available_copies > 0) {
+            $nextReservation = Reservation::where('book_id', $bookId)
+                ->where('status', Reservation::STATUS_PENDING)
+                ->orderBy('reserved_at')
+                ->first();
+
+            if ($nextReservation) {
+                $nextReservation->update([
+                    'status' => Reservation::STATUS_ACTIVE,
+                    'expires_at' => now()->addDays(14)
+                ]);
+
+                $book->decrement('available_copies');
+
+                if ($book->available_copies <= 0) {
+                    $book->update(['status' => Book::STATUS_RESERVED]);
+                }
+
+                return $nextReservation;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Ensure user owns the reservation.
+     */
+    private function ensureUserOwnsReservation(Reservation $reservation)
+    {
+        if ($reservation->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized action.');
+        }
     }
 }
