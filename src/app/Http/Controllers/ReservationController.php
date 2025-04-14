@@ -11,9 +11,6 @@ use App\Models\Borrowing;
 
 class ReservationController extends Controller
 {
-    /**
-     * Display a listing of reservations for users.
-     */
     public function userIndex(Request $request)
     {
         $search = $request->input('search');
@@ -32,9 +29,6 @@ class ReservationController extends Controller
         return view('user.reservations.index', compact('reservations', 'search'));
     }
 
-    /**
-     * Display the specified reservation for users.
-     */
     public function userShow(Reservation $reservation)
     {
         $this->ensureUserOwnsReservation($reservation);
@@ -42,18 +36,12 @@ class ReservationController extends Controller
         return view('user.reservations.show', compact('reservation'));
     }
 
-    /**
-     * Show the form for creating a new reservation for users.
-     */
     public function userCreate()
     {
         $books = Book::where('status', '!=', Book::STATUS_UNAVAILABLE)->get();
         return view('user.reservations.create', compact('books'));
     }
 
-    /**
-     * Store a newly created reservation for users.
-     */
     public function userStore(Request $request)
     {
         $validated = $request->validate([
@@ -108,9 +96,6 @@ class ReservationController extends Controller
         });
     }
 
-    /**
-     * Display a listing of reservations for admin.
-     */
     public function adminIndex(Request $request)
     {
         $search = $request->input('search');
@@ -131,9 +116,6 @@ class ReservationController extends Controller
         return view('admin.reservations.index', compact('reservations', 'search'));
     }
 
-    /**
-     * Show the form for creating a new reservation for admin.
-     */
     public function adminCreate()
     {
         $books = Book::all();
@@ -141,9 +123,6 @@ class ReservationController extends Controller
         return view('admin.reservations.create', compact('books', 'users'));
     }
 
-    /**
-     * Store a newly created reservation for admin.
-     */
     public function adminStore(Request $request)
     {
         $validated = $request->validate([
@@ -185,18 +164,12 @@ class ReservationController extends Controller
         });
     }
 
-    /**
-     * Display the specified reservation for admin.
-     */
     public function adminShow(Reservation $reservation)
     {
         $reservation->load(['user', 'book']);
         return view('admin.reservations.show', compact('reservation'));
     }
 
-    /**
-     * Show the form for editing the specified reservation.
-     */
     public function adminEdit(Reservation $reservation)
     {
         $books = Book::all();
@@ -204,9 +177,6 @@ class ReservationController extends Controller
         return view('admin.reservations.edit', compact('reservation', 'books', 'users'));
     }
 
-    /**
-     * Update the specified reservation for admin.
-     */
     public function adminUpdate(Request $request, Reservation $reservation)
     {
         $validated = $request->validate([
@@ -275,9 +245,6 @@ class ReservationController extends Controller
         });
     }
 
-    /**
-     * Remove the specified reservation for admin.
-     */
     public function adminDestroy(Reservation $reservation)
     {
         return DB::transaction(function () use ($reservation) {
@@ -300,9 +267,6 @@ class ReservationController extends Controller
         });
     }
 
-    /**
-     * Cancel reservation for users.
-     */
     public function userCancel(Reservation $reservation)
     {
         $this->ensureUserOwnsReservation($reservation);
@@ -334,9 +298,6 @@ class ReservationController extends Controller
         });
     }
 
-    /**
-     * Cancel reservation for admin.
-     */
     public function adminCancel(Reservation $reservation)
     {
         return DB::transaction(function () use ($reservation) {
@@ -365,9 +326,6 @@ class ReservationController extends Controller
         });
     }
 
-    /**
-     * Create borrowing from reservation for users.
-     */
     public function userCreateBorrowing(Reservation $reservation)
     {
         $this->ensureUserOwnsReservation($reservation);
@@ -400,9 +358,6 @@ class ReservationController extends Controller
         });
     }
 
-    /**
-     * Create borrowing from reservation for admin.
-     */
     public function adminCreateBorrowing(Reservation $reservation)
     {
         return DB::transaction(function () use ($reservation) {
@@ -433,9 +388,6 @@ class ReservationController extends Controller
         });
     }
 
-    /**
-     * Activate next pending reservation for a book.
-     */
     public function activateNextPendingReservation($bookId)
     {
         $book = Book::lockForUpdate()->findOrFail($bookId);
@@ -465,9 +417,6 @@ class ReservationController extends Controller
         return null;
     }
 
-    /**
-     * Ensure user owns the reservation.
-     */
     private function ensureUserOwnsReservation(Reservation $reservation)
     {
         if ($reservation->user_id !== auth()->id()) {

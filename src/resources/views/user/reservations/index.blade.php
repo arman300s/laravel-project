@@ -17,7 +17,6 @@
         </div>
     @endif
 
-    {{-- Search Form --}}
     <div class="bg-white rounded-lg shadow overflow-hidden mb-6">
         <div class="p-4 sm:p-6">
             <form method="GET" action="{{ route('user.reservations.index') }}">

@@ -31,7 +31,6 @@
                     @error('book_id') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
 
-                {{-- Borrowed At --}}
                 <div>
                     <label for="borrowed_at" class="block text-sm font-medium text-gray-700 mb-1">Borrowed At</label>
                     <input type="datetime-local" name="borrowed_at" id="borrowed_at"
@@ -40,7 +39,6 @@
                     @error('borrowed_at') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
 
-                {{-- Due At --}}
                 <div>
                     <label for="due_at" class="block text-sm font-medium text-gray-700 mb-1">Due At <span class="text-red-600">*</span></label>
                     <input type="datetime-local" name="due_at" id="due_at"
@@ -48,7 +46,6 @@
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition @error('due_at') @enderror">
                     @error('due_at') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
-                {{-- Status --}}
                 <div>
                     <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
                     <select name="status" id="status"
@@ -61,7 +58,6 @@
                     @error('status') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
 
-                {{-- Description --}}
                 <div class="md:col-span-2">
                     <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Notes</label>
                     <textarea name="description" id="description" rows="3"

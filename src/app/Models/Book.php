@@ -83,7 +83,6 @@ class Book extends Model
         return $this->status === self::STATUS_AVAILABLE && $this->available_copies > 0;
     }
 
-    // Получение доступных форматов
     public function getAvailableFormats()
     {
         $formats = [];
@@ -115,7 +114,6 @@ class Book extends Model
         return self::STATUS_COLORS[$this->status] ?? 'bg-gray-100 text-gray-800';
     }
 
-    // Бизнес-логика
     public function activatePendingReservations()
     {
         if ($this->available_copies <= 0) return;

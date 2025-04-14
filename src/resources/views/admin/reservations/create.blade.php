@@ -7,7 +7,6 @@
         <form action="{{ route('admin.reservations.store') }}" method="POST">
             @csrf
             <div class="grid grid-cols-1 gap-y-6 gap-x-4 md:grid-cols-2">
-                {{-- User --}}
                 <div>
                     <label for="user_id" class="block text-sm font-medium text-gray-700 mb-1">User <span class="text-red-600">*</span></label>
                     <select name="user_id" id="user_id" required
@@ -20,7 +19,6 @@
                     @error('user_id') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
 
-                {{-- Book --}}
                 <div>
                     <label for="book_id" class="block text-sm font-medium text-gray-700 mb-1">Book <span class="text-red-600">*</span></label>
                     <select name="book_id" id="book_id" required

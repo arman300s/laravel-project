@@ -56,7 +56,6 @@
                     </div>
                 </div>
 
-                {{-- Column 2: Metadata --}}
                 <div class="md:col-span-1">
                     <div class="bg-gray-50 p-4 rounded-lg space-y-4">
                         <h5 class="text-sm font-medium text-gray-500 uppercase mb-3 border-b pb-2">Book Information</h5>

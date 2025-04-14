@@ -8,9 +8,7 @@ use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of categories for users.
-     */
+
     public function index(Request $request)
     {
         $search = $request->input('search');
@@ -25,18 +23,14 @@ class CategoryController extends Controller
         return view('user.categories.index', compact('categories', 'search'));
     }
 
-    /**
-     * Display the specified category for users.
-     */
+
     public function show(Category $category)
     {
         $category->loadCount('books');
         return view('user.categories.show', compact('category'));
     }
 
-    /**
-     * Display a listing of categories for admin.
-     */
+
     public function adminIndex(Request $request)
     {
         $search = $request->input('search');
@@ -51,17 +45,11 @@ class CategoryController extends Controller
         return view('admin.categories.index', compact('categories', 'search'));
     }
 
-    /**
-     * Show the form for creating a new category.
-     */
     public function create()
     {
         return view('admin.categories.create');
     }
 
-    /**
-     * Store a newly created category in storage.
-     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -75,26 +63,17 @@ class CategoryController extends Controller
             ->with('success', 'Category created successfully.');
     }
 
-    /**
-     * Display the specified category for admin.
-     */
     public function adminShow(Category $category)
     {
         $category->loadCount('books');
         return view('admin.categories.show', compact('category'));
     }
 
-    /**
-     * Show the form for editing the specified category.
-     */
     public function edit(Category $category)
     {
         return view('admin.categories.edit', compact('category'));
     }
 
-    /**
-     * Update the specified category in storage.
-     */
     public function update(Request $request, Category $category)
     {
         $validated = $request->validate([
@@ -108,9 +87,6 @@ class CategoryController extends Controller
             ->with('success', 'Category updated successfully.');
     }
 
-    /**
-     * Remove the specified category from storage.
-     */
     public function destroy(Category $category)
     {
         if($category->books()->exists()) {

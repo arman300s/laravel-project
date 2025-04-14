@@ -10,9 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
-    /**
-     * Display a listing of books for users.
-     */
+
     public function index()
     {
         $search = request('search');
@@ -38,18 +36,13 @@ class BookController extends Controller
     }
 
 
-    /**
-     * Display the specified book for users.
-     */
+
     public function show(Book $book)
     {
         $book->load(['author', 'category']);
         return view('user.books.show', compact('book'));
     }
 
-    /**
-     * Display a listing of books for admin.
-     */
     public function adminIndex()
     {
         $search = request('search');
@@ -74,9 +67,7 @@ class BookController extends Controller
         return view('admin.books.index', compact('books'));
     }
 
-    /**
-     * Show the form for creating a new book.
-     */
+
     public function create()
     {
         $authors = Author::all();
@@ -84,9 +75,6 @@ class BookController extends Controller
         return view('admin.books.create', compact('authors', 'categories'));
     }
 
-    /**
-     * Store a newly created book in storage.
-     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -116,18 +104,12 @@ class BookController extends Controller
             ->with('success', 'Book created successfully.');
     }
 
-    /**
-     * Display the specified book for admin.
-     */
     public function adminShow(Book $book)
     {
         $book->load(['author', 'category']);
         return view('admin.books.show', compact('book'));
     }
 
-    /**
-     * Show the form for editing the specified book.
-     */
     public function edit(Book $book)
     {
         $authors = Author::all();
@@ -135,9 +117,6 @@ class BookController extends Controller
         return view('admin.books.edit', compact('book', 'authors', 'categories'));
     }
 
-    /**
-     * Update the specified book in storage.
-     */
     public function update(Request $request, Book $book)
     {
         $validated = $request->validate([
@@ -170,9 +149,6 @@ class BookController extends Controller
             ->with('success', 'Book updated successfully.');
     }
 
-    /**
-     * Remove the specified book from storage.
-     */
     public function destroy(Book $book)
     {
         $files = ['pdf', 'docx', 'epub'];
@@ -188,9 +164,6 @@ class BookController extends Controller
             ->with('success', 'Book deleted successfully.');
     }
 
-    /**
-     * Download the specified book file.
-     */
     public function download(Book $book, string $format)
     {
         if (!in_array($format, ['pdf', 'docx', 'epub'])) {

@@ -64,9 +64,7 @@
         </div>
     @endif
 
-    {{-- Pagination --}}
     <div class="mt-8">
-        {{-- Append search query to pagination links --}}
         {{ $books->appends(request()->query())->links() }}
     </div>
 

@@ -10,9 +10,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class UsersSearchController extends Controller
 {
     use AuthorizesRequests;
-    /**
-     * Display the user search page (admin version).
-     */
     public function adminIndex(Request $request): View
     {
 
@@ -36,9 +33,6 @@ class UsersSearchController extends Controller
         ]);
     }
 
-    /**
-     * Display the user search page (regular user version).
-     */
     public function userIndex(Request $request): View
     {
         $this->authorize('search', User::class);

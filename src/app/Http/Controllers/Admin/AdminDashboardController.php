@@ -11,9 +11,6 @@ use Illuminate\View\View;
 
 class AdminDashboardController extends Controller
 {
-    /**
-     * Display the admin dashboard with statistics.
-     */
     public function index(): View
     {
         $stats = [
@@ -33,9 +30,7 @@ class AdminDashboardController extends Controller
         return view('admin.dashboard', compact('stats', 'recentActivities'));
     }
 
-    /**
-     * Get recent activities from different models.
-     */
+
     protected function getRecentActivities(): array
     {
         $activities = [];

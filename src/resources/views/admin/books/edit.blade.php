@@ -10,7 +10,6 @@
             @method('PUT')
             <div class="grid grid-cols-1 gap-y-6 gap-x-4 md:grid-cols-2">
 
-                {{-- Title --}}
                 <div class="md:col-span-2">
                     <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Book Title <span class="text-red-600">*</span></label>
                     <input type="text" name="title" id="title" value="{{ old('title', $book->title) }}" required
@@ -18,7 +17,6 @@
                     @error('title') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
 
-                {{-- Author --}}
                 <div>
                     <label for="author_id" class="block text-sm font-medium text-gray-700 mb-1">Author <span class="text-red-600">*</span></label>
                     <select name="author_id" id="author_id" required
@@ -31,7 +29,6 @@
                     @error('author_id') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
 
-                {{-- Category --}}
                 <div>
                     <label for="category_id" class="block text-sm font-medium text-gray-700 mb-1">Category <span class="text-red-600">*</span></label>
                     <select name="category_id" id="category_id" required
@@ -44,7 +41,6 @@
                     @error('category_id') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
 
-                {{-- ISBN --}}
                 <div>
                     <label for="isbn" class="block text-sm font-medium text-gray-700 mb-1">ISBN <span class="text-red-600">*</span></label>
                     <input type="text" name="isbn" id="isbn" value="{{ old('isbn', $book->isbn) }}" required
@@ -52,7 +48,6 @@
                     @error('isbn') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
 
-                {{-- Published Year --}}
                 <div>
                     <label for="published_year" class="block text-sm font-medium text-gray-700 mb-1">Published Year <span class="text-red-600">*</span></label>
                     <input type="number" name="published_year" id="published_year" value="{{ old('published_year', $book->published_year) }}" required min="1900" max="{{ date('Y') }}"
@@ -60,7 +55,6 @@
                     @error('published_year') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
 
-                {{-- Available Copies --}}
                 <div>
                     <label for="available_copies" class="block text-sm font-medium text-gray-700 mb-1">Available Copies <span class="text-red-600">*</span></label>
                     <input type="number" name="available_copies" id="available_copies" value="{{ old('available_copies', $book->available_copies) }}" required min="0"
@@ -68,7 +62,6 @@
                     @error('available_copies') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
 
-                {{-- Total Copies --}}
                 <div>
                     <label for="total_copies" class="block text-sm font-medium text-gray-700 mb-1">Total Copies <span class="text-red-600">*</span></label>
                     <input type="number" name="total_copies" id="total_copies" value="{{ old('total_copies', $book->total_copies) }}" required min="0"
@@ -76,7 +69,6 @@
                     @error('total_copies') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
 
-                {{-- Description --}}
                 <div class="md:col-span-2">
                     <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
                     <textarea name="description" id="description" rows="4"
@@ -84,11 +76,9 @@
                     @error('description') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
 
-                {{-- File Uploads --}}
                 <div class="md:col-span-2 pt-4 border-t mt-2">
                     <h4 class="text-md font-medium text-gray-800 mb-3">Upload New Book Files (Optional - replaces existing)</h4>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                        {{-- PDF --}}
                         <div>
                             <label for="file_pdf" class="block text-sm font-medium text-gray-700 mb-1">PDF File (.pdf)</label>
                             @if ($book->file_pdf)
@@ -98,7 +88,6 @@
                                    class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 @error('file_pdf') border border-red-500 rounded-lg px-2 py-1 @enderror">
                             @error('file_pdf') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                         </div>
-                        {{-- DOCX --}}
                         <div>
                             <label for="file_docx" class="block text-sm font-medium text-gray-700 mb-1">Word File (.docx)</label>
                             @if ($book->file_docx)
@@ -108,7 +97,6 @@
                                    class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 @error('file_docx') border border-red-500 rounded-lg px-2 py-1 @enderror">
                             @error('file_docx') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                         </div>
-                        {{-- EPUB --}}
                         <div>
                             <label for="file_epub" class="block text-sm font-medium text-gray-700 mb-1">ePub File (.epub)</label>
                             @if ($book->file_epub)
