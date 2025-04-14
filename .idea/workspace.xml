@@ -6,14 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9f4eb7bd-5a9c-4a9f-8477-a5d2904c1dcb" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Http/Controllers/Admin/AdminDashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Http/Controllers/Admin/AdminDashboardController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Http/Controllers/User/UserDashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Http/Controllers/User/UserDashboardController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/views/admin/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/views/admin/dashboard.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/views/components/application-logo.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/views/components/application-logo.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/views/layouts/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/views/user/categories/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/views/user/categories/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/views/user/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/views/user/dashboard.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/views/user/categories/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/views/user/categories/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -292,7 +285,8 @@
       <workItem from="1744470557618" duration="16465000" />
       <workItem from="1744487633878" duration="759000" />
       <workItem from="1744491369635" duration="214000" />
-      <workItem from="1744605406646" duration="22722000" />
+      <workItem from="1744605406646" duration="24692000" />
+      <workItem from="1744656860259" duration="1745000" />
     </task>
     <servers />
   </component>

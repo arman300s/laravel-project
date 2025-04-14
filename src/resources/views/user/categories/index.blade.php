@@ -47,7 +47,7 @@
                     <tr class="hover:bg-gray-50 transition">
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $category->name }}</td>
                         <td class="px-6 py-4 text-sm text-gray-500">{{ Str::limit($category->description, 50) }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $category->books_count }}</td>
+                        <td class="px-10 py-4 whitespace-nowrap text-sm text-gray-500 text-left">{{ $category->books_count }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <div class="flex space-x-2 justify-center">
                                 <a href="{{ route('user.categories.show', $category) }}" class="text-blue-600 hover:text-blue-900" title="View">
