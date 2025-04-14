@@ -1,20 +1,20 @@
 services:
-#    nginx:
-#        image: "nginx:stable-alpine"
-#        ports:
-#            - "8000:80"
-#        volumes:
-#            - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-#            - ./src:/var/www/team-project
-#        depends_on:
-#            - mysql
-#            - php
-#    php:
-#        build:
-#            context: dockerfiles
-#            dockerfile: php.Dockerfile
-#        volumes:
-#            - ./src:/var/www/team-project
+    nginx:
+        image: "nginx:stable-alpine"
+        ports:
+            - "8000:80"
+        volumes:
+            - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+            - ./src:/var/www/team-project
+        depends_on:
+            - mysql
+            - php
+    php:
+        build:
+            context: dockerfiles
+            dockerfile: php.Dockerfile
+        volumes:
+            - ./src:/var/www/team-project
     mysql:
         image: mysql:8.0
         ports:
@@ -23,16 +23,16 @@ services:
             - env/mysql.env
         volumes:
             - ./src:/var/www/team-project
-#    composer:
-#        build:
-#            context: dockerfiles
-#            dockerfile: composer.Dockerfile
-#        volumes:
-#            - ./src:/var/www/team-project
-#    artisan:
-#        build:
-#            context: dockerfiles
-#            dockerfile: php.Dockerfile
-#        volumes:
-#            - ./src:/var/www/team-project
-#        entrypoint: ["php", "/var/www/team-project/artisan"]
+    composer:
+        build:
+            context: dockerfiles
+            dockerfile: composer.Dockerfile
+        volumes:
+            - ./src:/var/www/team-project
+    artisan:
+        build:
+            context: dockerfiles
+            dockerfile: php.Dockerfile
+        volumes:
+            - ./src:/var/www/team-project
+        entrypoint: ["php", "/var/www/team-project/artisan"]
