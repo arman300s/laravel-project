@@ -5,10 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9f4eb7bd-5a9c-4a9f-8477-a5d2904c1dcb" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Http/Controllers/AuthorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Http/Controllers/AuthorController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/views/admin/authors/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/views/admin/authors/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/resources/views/user/authors/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/views/user/authors/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/views/user/books/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/views/user/books/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/views/user/borrowings/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/views/user/borrowings/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/views/user/categories/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/views/user/categories/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/views/user/reservations/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/views/user/reservations/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/views/user/users/index.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/views/user/users/search-user.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/views/user/users/search-user.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/views/user/users/show.blade.php" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -285,6 +291,8 @@
       <workItem from="1744377217263" duration="1627000" />
       <workItem from="1744470557618" duration="16465000" />
       <workItem from="1744487633878" duration="759000" />
+      <workItem from="1744491369635" duration="214000" />
+      <workItem from="1744605406646" duration="2525000" />
     </task>
     <servers />
   </component>

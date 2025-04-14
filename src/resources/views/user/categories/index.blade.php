@@ -16,15 +16,15 @@
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Books</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    <th scope="col" class="py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                 @forelse ($categories as $category)
                     <tr class="hover:bg-gray-50 transition">
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $category->name }}</td>
-                        <td class="px-6 py-4 text-sm text-gray-500">{{ Str::limit($category->description, 50) }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{{ $category->booksCount()}}</td>
+                        <td class="py-4 text-sm text-gray-500">{{ Str::limit($category->description, 50) }}</td>
+                        <td class="py-4 mr-12 text-sm text-gray-500 text-center">{{ $category->booksCount()}}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <div class="flex space-x-2 justify-center">
                                 <a href="{{ route('user.categories.show', $category) }}" class="text-blue-600 hover:text-blue-900">

@@ -10,10 +10,10 @@
                 <div class="flex flex-col md:flex-row gap-4">
                     <div class="flex-1">
                         <input type="text" name="search" value="{{ request('search') }}"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                               class="w-full py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                                placeholder="Search by name">
                     </div>
-                    <button type="submit" class="text-center py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-2000">
+                    <button type="submit" class="w-20 text-center py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-2000">
                         Search
                     </button>
                     @if(request()->has('search'))

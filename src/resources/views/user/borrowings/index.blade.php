@@ -43,7 +43,7 @@
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Borrowed At</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due At</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    <th scope="col" class="py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -69,15 +69,15 @@
                                 {{ ucfirst($borrowing->status) }}
                             </span>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <td class="px-2 py-4 whitespace-nowrap text-sm font-medium">
                             <div class="flex space-x-2 justify-center">
-                                <a href="{{ route('user.borrowings.show', $borrowing) }}" class="text-center text-blue-600 hover:text-blue-900" title="View">
+                                <a href="{{ route('user.borrowings.show', $borrowing) }}" class="text-left  hover:text-blue-900" title="View">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z" /><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" /></svg>
                                 </a>
                                 @if($borrowing->status !== 'returned')
                                     <form action="{{ route('user.borrowings.return', $borrowing) }}" method="POST">
                                         @csrf
-                                        <button type="submit" class="text-green-600 hover:text-green-900" title="Mark as Returned">
+                                        <button type="submit" class="text-left text-green-600 hover:text-green-900" title="Mark as Returned">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
                                         </button>
                                     </form>

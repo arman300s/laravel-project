@@ -1,4 +1,4 @@
-<x-book-layout> {{-- Assuming user layout --}}
+<x-book-layout>
     <div class="mb-6">
         <h3 class="text-3xl font-bold text-gray-800">Library Catalog</h3>
         <p class="text-gray-600 mt-1">Browse or search for available books.</p>
@@ -30,7 +30,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach ($books as $book)
                 <div class="bg-white rounded-lg shadow overflow-hidden flex flex-col">
-                    <div class="p-5 flex-grow">
+                    <div class="flex-grow">
                         <h4 class="text-lg font-semibold text-gray-900 m-4 p-4">
                             <a href="{{ route('user.books.show', $book) }}" class="hover:text-blue-700 transition">
                                 {{ $book->title }}
