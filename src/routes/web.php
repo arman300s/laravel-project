@@ -5,7 +5,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\BorrowingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ReservationController; // <-- Added
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\User\UserDashboardController;
@@ -26,18 +26,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 });
 
-// User Routes
 Route::prefix('user')->name('user.')->middleware(['auth', 'verified', 'user'])->group(function () {
     Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
 
-    // Book Routes
     Route::prefix('books')->name('books.')->controller(BookController::class)->group(function () {
         Route::get('/search-book', 'userSearch')->name('search-book');
         Route::get('/', 'index')->name('index');
         Route::get('/{book}', 'show')->name('show');
     });
 
-    // Borrowing Routes
     Route::prefix('borrowings')->name('borrowings.')->controller(BorrowingController::class)->group(function () {
         Route::get('/', 'userIndex')->name('index');
         Route::get('/create', 'userCreate')->name('create');
@@ -46,7 +43,6 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'verified', 'user'])->
         Route::post('/{borrowing}/return', 'userReturn')->name('return');
     });
 
-    // Reservation Routes
     Route::prefix('reservations')->name('reservations.')->controller(ReservationController::class)->group(function () {
         Route::get('/', 'userIndex')->name('index');
         Route::get('/create', 'userCreate')->name('create');
@@ -64,15 +60,12 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'verified', 'user'])->
     Route::get('/authors/{author}', [AuthorController::class, 'show'])->name('authors.show');
 });
 
-// Admin Routes
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
-    // User Management
     Route::get('/users/search', [UsersSearchController::class, 'adminIndex'])->name('users.search');
     Route::resource('users', AdminUserController::class);
 
-    // Book Management
     Route::prefix('books')->name('books.')->controller(BookController::class)->group(function () {
         Route::get('/search-book', 'adminSearch')->name('search-book');
         Route::get('/', 'adminIndex')->name('index');
@@ -84,7 +77,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'admin']
         Route::delete('/{book}', 'destroy')->name('destroy');
     });
 
-    // Borrowing Management
     Route::prefix('borrowings')->name('borrowings.')->controller(BorrowingController::class)->group(function () {
         Route::get('/', 'adminIndex')->name('index');
         Route::get('/create', 'adminCreate')->name('create');
@@ -96,7 +88,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'admin']
         Route::delete('/{borrowing}', 'adminDestroy')->name('destroy');
     });
 
-    // Reservation Management <-- Added Section
     Route::prefix('reservations')->name('reservations.')->controller(ReservationController::class)->group(function () {
         Route::get('/', 'adminIndex')->name('index');
         Route::get('/create', 'adminCreate')->name('create');
@@ -110,7 +101,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'admin']
             ->name('create-borrowing');
     });
 
-    // Category Management
     Route::prefix('categories')->name('categories.')->controller(CategoryController::class)->group(function () {
         Route::get('/', 'adminIndex')->name('index');
         Route::get('/create', 'create')->name('create');
@@ -121,7 +111,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'admin']
         Route::delete('/{category}', 'destroy')->name('destroy');
     });
 
-    // Author Management
     Route::prefix('authors')->name('authors.')->controller(AuthorController::class)->group(function () {
         Route::get('/', 'adminIndex')->name('index');
         Route::get('/create', 'create')->name('create');
@@ -133,16 +122,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'admin']
     });
 });
 
-// Common Routes (accessible by both user and admin)
 Route::middleware('auth')->group(function () {
-    // Profile Management
     Route::prefix('profile')->name('profile.')->group(function () {
         Route::get('/', [ProfileController::class, 'edit'])->name('edit');
         Route::patch('/', [ProfileController::class, 'update'])->name('update');
         Route::delete('/', [ProfileController::class, 'destroy'])->name('destroy');
     });
 
-    // Book Downloads
     Route::get('/books/{book}/download/{format}', [BookController::class, 'download'])
         ->name('books.download')
         ->where('format', 'pdf|docx|epub');

@@ -28,7 +28,7 @@
                         </div>
                         <div class="flex justify-between">
                             <dt class="text-sm text-gray-500">Description</dt>
-                            <dd class="text-sm text-gray-900">{{ $category->description ?? 'No description' }}</dd>
+                            <dd class="ml-4 text-sm text-gray-900">{{ $category->description ?? 'No description' }}</dd>
                         </div>
                         <div class="flex justify-between">
                             <dt class="text-sm text-gray-500">Available Books</dt>
