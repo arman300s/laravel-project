@@ -82,6 +82,14 @@
                                 <a href="{{ route('admin.borrowings.edit', $borrowing) }}" class="text-indigo-600 hover:text-indigo-900" title="Edit">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" /></svg>
                                 </a>
+                                <form action="{{ route('admin.borrowings.warn', $borrowing->id) }}" method="POST" style="display:inline">
+                                    @csrf
+                                    <button type="submit" title="Send Warning" class="text-red-600 hover:text-red-900">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M8.257 3.099c.366-.446.957-.57 1.45-.31l.094.057 7 4a1 1 0 01.492.866v8a1 1 0 01-1 1H4a1 1 0 01-1-1v-8a1 1 0 01.514-.874l7-4zM10 12a1 1 0 100-2 1 1 0 000 2zm0 2a1 1 0 01-1-1h2a1 1 0 01-1 1z" clip-rule="evenodd" />
+                                        </svg>
+                                    </button>
+                                </form>
                                 @if($borrowing->status !== 'returned')
                                     <form action="{{ route('admin.borrowings.return', $borrowing) }}" method="POST">
                                         @csrf

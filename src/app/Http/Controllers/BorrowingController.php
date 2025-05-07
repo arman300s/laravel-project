@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Borrowing;
 use App\Models\Book;
+use App\Models\Notification;
 use App\Models\User;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
@@ -388,5 +389,21 @@ class BorrowingController extends Controller
         if ($borrowing->user_id !== auth()->id()) {
             abort(403, 'Unauthorized action.');
         }
+    }
+
+    public function sendWarning(Borrowing $borrowing)
+    {
+
+        $user = $borrowing->user_id;
+        $message = "⚠️ Reminder: Please return the book '{$borrowing->book_id}' before the due date ({$borrowing->due_at}).";
+
+        Notification::create([
+            'user_id' => $user,
+            'message' => $message,
+            'read' => false,
+        ]);
+
+        return redirect()->back()->with('success', 'Warning message sent successfully!');
+
     }
 }

@@ -84,8 +84,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'admin']
         Route::get('/{borrowing}', 'adminShow')->name('show');
         Route::get('/{borrowing}/edit', 'adminEdit')->name('edit');
         Route::put('/{borrowing}', 'adminUpdate')->name('update');
-        Route::post('/{borrowing}/return', 'adminReturn')->name('return'); // Note: Might consider PATCH/PUT
+        Route::post('/{borrowing}/return', 'adminReturn')->name('return');
         Route::delete('/{borrowing}', 'adminDestroy')->name('destroy');
+        Route::post('/{borrowing}/warn', 'sendWarning' )->name('warn');
+
     });
 
     Route::prefix('reservations')->name('reservations.')->controller(ReservationController::class)->group(function () {

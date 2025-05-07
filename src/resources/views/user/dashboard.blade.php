@@ -5,6 +5,31 @@
         </h2>
     </x-slot>
 
+    @if(auth()->check() && auth()->user()->notifications->count() > 0)
+        <div id="notificationBox" class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-900 p-6 rounded-md shadow-md mb-6 relative transition-all duration-300">
+            <div class="flex items-start justify-between">
+                <div>
+                    <h3 class="text-lg font-semibold flex items-center gap-2">
+                        <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z" />
+                        </svg>
+                        Notifications
+                    </h3>
+                    <ul class="mt-2 list-disc list-inside text-sm space-y-1">
+                        @foreach(auth()->user()->notifications as $notification)
+                            <li>{{ $notification->message }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                <button onclick="document.getElementById('notificationBox').style.display='none'"
+                        class="text-sm text-yellow-700 hover:text-yellow-900 font-semibold px-2 py-1 rounded focus:outline-none">
+                    ✖
+                </button>
+            </div>
+        </div>
+    @endif
+
+
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
