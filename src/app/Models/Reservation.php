@@ -25,13 +25,11 @@ class Reservation extends Model
         'expires_at' => 'datetime',
     ];
 
-    // Status constants
     public const STATUS_PENDING = 'pending';
     public const STATUS_ACTIVE = 'active';
     public const STATUS_COMPLETED = 'completed';
     public const STATUS_CANCELED = 'canceled';
 
-    // Status colors for UI
     public const STATUS_COLORS = [
         self::STATUS_PENDING => 'bg-yellow-100 text-yellow-800',
         self::STATUS_ACTIVE => 'bg-blue-100 text-blue-800',
@@ -39,7 +37,6 @@ class Reservation extends Model
         self::STATUS_CANCELED => 'bg-red-100 text-red-800',
     ];
 
-    // All statuses for validation
     public const ALL_STATUSES = [
         self::STATUS_PENDING,
         self::STATUS_ACTIVE,
@@ -47,7 +44,6 @@ class Reservation extends Model
         self::STATUS_CANCELED,
     ];
 
-    // Scopes
     public function scopePending($query)
     {
         return $query->where('status', self::STATUS_PENDING);
@@ -68,7 +64,6 @@ class Reservation extends Model
         return $query->where('expires_at', '<', now());
     }
 
-    // Relationships
     public function book(): BelongsTo
     {
         return $this->belongsTo(Book::class);
@@ -114,7 +109,6 @@ class Reservation extends Model
         return $this->expires_at->isPast();
     }
 
-    // Business logic methods
     public function canBeActivated(): bool
     {
         return $this->status === self::STATUS_PENDING
